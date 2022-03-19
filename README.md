@@ -1,7 +1,8 @@
 # AnkiClone
 Assignment to be done by the end of the spring semestre. First time using databases and windows form, will be updating it over and over with time.
 
-#19.03.2022#
+#**#19.03.2022#**
+
 ![Screenshot_7](https://user-images.githubusercontent.com/64064136/159135183-0ba06a6d-7079-4f04-8ff9-07809270f9a2.png)
 
 
