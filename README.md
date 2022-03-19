@@ -10,7 +10,7 @@ for one user for now. I'll update it to become multi-usered soon. From the app i
 
 My plan is to make Decks unique to the users. Today I've finished the login page, logging out was buggy, not anymore. We'll see what will happen later. I'll keep updating here.
 
-I do think that everything is perfectly done in login page, it will warn you if you are registered already, or if its invalid password/nickname, it'll show an error msg
+I do think that everything is perfectly done in login page(except SQL injections, my code is open to that and i'll update it), it will warn you if you are registered already, or if its invalid password/nickname, it'll show an error msg
 there about these stuff. You can't register with the taken usernames (checks from DB) and asks you if you dont want to set a password, if you try to register without
 a password.
 
