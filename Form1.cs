@@ -27,6 +27,7 @@ namespace clone
         private void Form1_Load(object sender, EventArgs e)
         {
             panel1.Controls.Add(loginPage1);
+            panel1.Controls.Add(deck_page);
             
         }
 
@@ -38,7 +39,6 @@ namespace clone
                 panel1.Controls.Add(deck_page);
                 deck_page.Show();
             }
-          
         }
 
         private void Add_Button_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -94,14 +94,18 @@ namespace clone
             else
             {
                 //if doesn't exist, create table
-                string strTemp = " [Username] Text, [Password] Text ";
+                string strTemp = "UserID AUTOINCREMENT PRIMARY KEY, [Username] Text, [Password] Text ";
                 OleDbCommand myCommand = new OleDbCommand();
                 myCommand.Connection = myDatabase;
+
                 myCommand.CommandText = "CREATE TABLE users(" + strTemp + ")";
                 myCommand.ExecuteNonQuery();
                 string space = "";
-                myCommand.CommandText = "INSERT INTO users([Username], [Password]) VALUES ('" + space + "' , '" + space + "')";
-                myCommand.ExecuteNonQuery();
+               // myCommand.CommandText = "INSERT INTO users([Username], [Password]) VALUES ('" + space + "' , '" + space + "')";
+                    myCommand.CommandText= "INSERT INTO users([Username], [Password]) VALUES(@Username, @Password)";
+                    myCommand.Parameters.AddWithValue("@Name", space);
+                    myCommand.Parameters.AddWithValue("@Password", space);
+                    myCommand.ExecuteNonQuery();
                 myDatabase.Close();
                 //if doesn't exist, create table
             }
@@ -121,8 +125,8 @@ namespace clone
 
             if (reader.Read() && deck_page.get_isLoggedOff() == false && loginPage1.Visible==false)
             {
-                lblUserName.Text = "  Logged user: " + reader.GetString(0);
-                deck_page.set_username(reader.GetString(0));
+                lblUserName.Text = "  Logged user: " + reader.GetString(1);
+                deck_page.set_username(reader.GetString(1));
                 
             }
             if( deck_page.get_isLoggedOff()==true)

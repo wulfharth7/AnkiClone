@@ -7,7 +7,7 @@ using System.Data.OleDb;
 
 namespace clone
 {
-    
+
     public class Decks
     {
         private string front_face, back_face, front_language, back_language;
@@ -59,7 +59,17 @@ namespace clone
     {
         private string user_nickname;
         private string user_password;
-        private List<string> users_decks = new List<string>();
+        public List<string> users_decks = new List<string>();
+        private int UserID;
+
+        public int get_ID()
+        {
+            return UserID;
+        }
+        public void set_ID(int front_face_lang)
+        {
+            UserID = front_face_lang;
+        }
 
         public string get_nickname()
         {
@@ -81,7 +91,7 @@ namespace clone
 
     static class Program
     {
-       
+
         [STAThread]
         static void Main()
         {

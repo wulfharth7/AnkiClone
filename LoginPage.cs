@@ -15,8 +15,9 @@ namespace clone
 
     public partial class LoginPage : UserControl
     {
-
-       
+        OleDbConnection myDatabase = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;" + @"Data Source= C:\Users\erknn\Desktop\deneme proje\clone\anki.accdb");
+        OleDbCommand myCMD = new OleDbCommand();
+        OleDbDataReader reader;
 
         public LoginPage()
         {
@@ -26,7 +27,7 @@ namespace clone
 
         private void UserControl1_Load(object sender, EventArgs e)
         {
-            pass_box.PasswordChar = '*'; //hides pass
+            box_pass.PasswordChar = '*'; //hides pass
            
 
         }
@@ -35,35 +36,31 @@ namespace clone
         {
             if (show_pass_panel.Checked == true)
             {
-                pass_box.PasswordChar = '\0'; //shows password
+                box_pass.PasswordChar = '\0'; //shows password
             }
             else
             {
-                pass_box.PasswordChar = '*'; //hides pass
+                box_pass.PasswordChar = '*'; //hides pass
             }
         } //checkbox for showing password
-
+        //kayıt kismini coklu kisi yap, tek kisiye calisiyor
         private void button2_Click(object sender, EventArgs e) //button for login
         {
-            
-            OleDbConnection myDatabase = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;" + @"Data Source= C:\Users\erknn\Desktop\deneme proje\clone\anki.accdb");
-            OleDbCommand myCMD = new OleDbCommand();
+  
             myDatabase.Open(); //i've coded the same thing twice, how to fix this in the function?
             OleDbCommand readCommand = new OleDbCommand("SELECT * from  users ", myDatabase); //why select * but not select username, whats foreach
-            OleDbDataReader reader = readCommand.ExecuteReader();
-            if (reader.Read())
+            reader = readCommand.ExecuteReader();
+            while (reader.Read())
             {
-                string nick = reader.GetString(0);
-                string pass = reader.GetString(1);
+                string nick = reader.GetString(1);
+                string pass = reader.GetString(2);
                 if (nick == box_username.Text)
                 {
-                    if (pass == pass_box.Text)
+                    if (pass == box_pass.Text)
                     {
                         error_message_username.Text = "";
                         this.Hide();
-                        box_username.Text = "";
-                        pass_box.Text = "";
-                        
+                        clean_boxes();
                     }
                     else
                     {
@@ -79,17 +76,14 @@ namespace clone
             myDatabase.Close();
         }
         private void btnRegister_Click(object sender, EventArgs e) //button for register
-        {
-            OleDbConnection myDatabase = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;" + @"Data Source= C:\Users\erknn\Desktop\deneme proje\clone\anki.accdb");
-            OleDbCommand myCMD = new OleDbCommand();
+        {  
             myDatabase.Open();
             OleDbCommand readCommand = new OleDbCommand("SELECT * from  users ", myDatabase); //why select * but not select username
-            OleDbDataReader reader = readCommand.ExecuteReader();
+            reader = readCommand.ExecuteReader();
             
             if (reader.Read())
             { 
-                string sql = reader.GetString(0);
-                if (box_username.Text != sql)
+                if (box_username.Text != "")
                 {
                     if (box_username.Text == "")
                     {
@@ -97,17 +91,30 @@ namespace clone
                     }
                     else
                     {
+                        myCMD.Connection = myDatabase;
                         error_message_username.Text = "";
-                        if (pass_box.Text == "")
+                        if (box_pass.Text == "")
                         {
                             DialogResult dialogresult = MessageBox.Show("Are you sure that you don't want to set a password?", "Important!", MessageBoxButtons.YesNo);
 
                             if (dialogresult == DialogResult.Yes)
                             {
-                                myCMD.Connection = myDatabase;
-                                myCMD.CommandText = "Update users SET [Username]= '" + box_username.Text + "' ,[Password]= '" + pass_box.Text + "'";
-                                //myCMD.CommandText = "INSERT INTO users([Username], [Password]) VALUES ('" + box_username.Text + "' , '" + pass_box.Text + "')";
-                                myCMD.ExecuteNonQuery();
+                                if (check_if_first_user_being_created())
+                                {
+                                    myCMD.CommandText = "Update users SET [Username]= '" + box_username.Text + "' ,[Password]= '" + box_pass.Text + "'";
+                                    //myCMD.CommandText = "INSERT INTO users([Username], [Password]) VALUES ('" + box_username.Text + "' , '" + pass_box.Text + "')";
+                                    myCMD.ExecuteNonQuery();
+                                }
+                                else
+                                {
+                                    myCMD.CommandText = "INSERT INTO users([Username], [Password]) VALUES(@Username, @Password)";
+                                    myCMD.Parameters.AddWithValue("@Name", box_username.Text);
+                                    myCMD.Parameters.AddWithValue("@Password", box_pass.Text);
+                                    clean_boxes();
+                                    error_message_username.Text = "Succesfully registered!";
+                                    myCMD.ExecuteNonQuery();
+                                }
+                               
                             }
                             else if (dialogresult == DialogResult.No)
                             {
@@ -117,11 +124,23 @@ namespace clone
                         else
                         {
                             myCMD.Connection = myDatabase;
-                            myCMD.CommandText = "Update users SET [Username]= '" + box_username.Text + "' ,[Password]= '" + pass_box.Text + "'";
-                            box_username.Text = "";
-                            pass_box.Text = "";
-                            error_message_username.Text = "Succesfully registered!";
-                            myCMD.ExecuteNonQuery();
+                            if (check_if_first_user_being_created())
+                            {
+                                myCMD.CommandText = "Update users SET [Username]= '" + box_username.Text + "' ,[Password]= '" + box_pass.Text + "'";
+                                //myCMD.CommandText = "INSERT INTO users([Username], [Password]) VALUES ('" + box_username.Text + "' , '" + pass_box.Text + "')";
+                                myCMD.ExecuteNonQuery();
+                                clean_boxes();
+                            }
+                            else
+                            {
+                                myCMD.CommandText = "INSERT INTO users([Username], [Password]) VALUES(@Username, @Password)";
+                                myCMD.Parameters.AddWithValue("@Name", box_username.Text);
+                                myCMD.Parameters.AddWithValue("@Password", box_pass.Text);
+                                clean_boxes();
+                                error_message_username.Text = "Succesfully registered!";
+                                myCMD.ExecuteNonQuery();
+                            }
+                            
                         }
 
                     }
@@ -134,7 +153,44 @@ namespace clone
 
             myDatabase.Close();
         }
+        private bool check_if_first_user_being_created()
+        {
+            OleDbCommand readCommand = new OleDbCommand("SELECT * from  users ", myDatabase); //why select * but not select username
+            reader = readCommand.ExecuteReader();
+
+            int id;
+            string nick;
+            if (reader.Read())
+            {
+                id = reader.GetInt32(0);
+                nick = reader.GetString(1);
+                if (id == 1 && nick == "")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
+            }
+            
+        }
+
+        private void clean_boxes()
+        {
+            box_username.Text = "";
+            box_pass.Text = "";
+        }
     }
 }
+
+
+
+
+
 
 

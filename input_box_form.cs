@@ -44,7 +44,7 @@ namespace clone
             {
                 try
                 {//if doesn't exist, create table
-                    string strTemp = " [Front_Face] Text, [Back_Face] Text, [FRONT_LANG] Text, [BACK_LANG] Text ";
+                    string strTemp = "DeckOwnerID Text, [Front_Face] Text, [Back_Face] Text, [FRONT_LANG] Text, [BACK_LANG] Text ";
                     OleDbCommand myCommand = new OleDbCommand();
                     myCommand.Connection = myDatabase;
                     myCommand.CommandText = "CREATE TABLE " + boxInput.Text + "(" + strTemp + ")";
@@ -62,6 +62,5 @@ namespace clone
             }
 
         }
-
     }
 }

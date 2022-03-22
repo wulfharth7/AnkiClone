@@ -35,7 +35,7 @@ namespace clone
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.box_username = new System.Windows.Forms.TextBox();
-            this.pass_box = new System.Windows.Forms.TextBox();
+            this.box_pass = new System.Windows.Forms.TextBox();
             this.error_message_username = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -95,12 +95,12 @@ namespace clone
             this.box_username.Size = new System.Drawing.Size(100, 22);
             this.box_username.TabIndex = 11;
             // 
-            // pass_box
+            // box_pass
             // 
-            this.pass_box.Location = new System.Drawing.Point(311, 136);
-            this.pass_box.Name = "pass_box";
-            this.pass_box.Size = new System.Drawing.Size(100, 22);
-            this.pass_box.TabIndex = 12;
+            this.box_pass.Location = new System.Drawing.Point(311, 136);
+            this.box_pass.Name = "box_pass";
+            this.box_pass.Size = new System.Drawing.Size(100, 22);
+            this.box_pass.TabIndex = 12;
             // 
             // error_message_username
             // 
@@ -121,7 +121,7 @@ namespace clone
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.box_username);
-            this.Controls.Add(this.pass_box);
+            this.Controls.Add(this.box_pass);
             this.Name = "LoginPage";
             this.Size = new System.Drawing.Size(713, 427);
             this.Load += new System.EventHandler(this.UserControl1_Load);
@@ -138,7 +138,7 @@ namespace clone
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox box_username;
-        private System.Windows.Forms.TextBox pass_box;
+        private System.Windows.Forms.TextBox box_pass;
         private System.Windows.Forms.Label error_message_username;
     }
 }
