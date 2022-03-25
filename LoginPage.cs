@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace clone
 {
@@ -15,9 +15,19 @@ namespace clone
 
     public partial class LoginPage : UserControl
     {
-        OleDbConnection myDatabase = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;" + @"Data Source= C:\Users\erknn\Desktop\deneme proje\clone\anki.accdb");
-        OleDbCommand myCMD = new OleDbCommand();
-        OleDbDataReader reader;
+        private int userID = 0;
+        public int get_UserID()
+        {
+            return userID;
+        }
+        public void set_UserID(int variable)
+        {
+            userID = variable;
+        }
+        private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
+        SqlConnection myDatabase = new SqlConnection(connectionstring);
+        SqlCommand myCMD = new SqlCommand();
+        SqlDataReader reader;
 
         public LoginPage()
         {
@@ -48,17 +58,20 @@ namespace clone
         {
   
             myDatabase.Open(); //i've coded the same thing twice, how to fix this in the function?
-            OleDbCommand readCommand = new OleDbCommand("SELECT * from  users ", myDatabase); //why select * but not select username, whats foreach
+            SqlCommand readCommand = new SqlCommand("SELECT * from  users ", myDatabase); //why select * but not select username, whats foreach
             reader = readCommand.ExecuteReader();
             while (reader.Read())
             {
+                
                 string nick = reader.GetString(1);
                 string pass = reader.GetString(2);
                 if (nick == box_username.Text)
                 {
                     if (pass == box_pass.Text)
                     {
+                        int id = reader.GetInt32(0);
                         error_message_username.Text = "";
+                        this.set_UserID(id); 
                         this.Hide();
                         clean_boxes();
                     }
@@ -78,7 +91,7 @@ namespace clone
         private void btnRegister_Click(object sender, EventArgs e) //button for register
         {  
             myDatabase.Open();
-            OleDbCommand readCommand = new OleDbCommand("SELECT * from  users ", myDatabase); //why select * but not select username
+            SqlCommand readCommand = new SqlCommand("SELECT * from  users ", myDatabase); //why select * but not select username
             reader = readCommand.ExecuteReader();
             
             if (reader.Read())
@@ -101,13 +114,14 @@ namespace clone
                             {
                                 if (check_if_first_user_being_created())
                                 {
-                                    myCMD.CommandText = "Update users SET [Username]= '" + box_username.Text + "' ,[Password]= '" + box_pass.Text + "'";
-                                    //myCMD.CommandText = "INSERT INTO users([Username], [Password]) VALUES ('" + box_username.Text + "' , '" + pass_box.Text + "')";
+                                    myCMD.CommandText = "Update users SET [Username]= @name ,[Password]= @pass";
+                                    myCMD.Parameters.AddWithValue("@name",box_username.Text);
+                                    myCMD.Parameters.AddWithValue("@pass",box_pass.Text);
                                     myCMD.ExecuteNonQuery();
                                 }
                                 else
                                 {
-                                    myCMD.CommandText = "INSERT INTO users([Username], [Password]) VALUES(@Username, @Password)";
+                                    myCMD.CommandText = "INSERT into dbo.users ([Username],[Password]) VALUES (@name,@pass)";
                                     myCMD.Parameters.AddWithValue("@Name", box_username.Text);
                                     myCMD.Parameters.AddWithValue("@Password", box_pass.Text);
                                     clean_boxes();
@@ -126,14 +140,16 @@ namespace clone
                             myCMD.Connection = myDatabase;
                             if (check_if_first_user_being_created())
                             {
-                                myCMD.CommandText = "Update users SET [Username]= '" + box_username.Text + "' ,[Password]= '" + box_pass.Text + "'";
-                                //myCMD.CommandText = "INSERT INTO users([Username], [Password]) VALUES ('" + box_username.Text + "' , '" + pass_box.Text + "')";
+                                myCMD.CommandText = "Update users SET [Username]= @name ,[Password]= @pass";
+                                myCMD.Parameters.AddWithValue("@name", box_username.Text);
+                                myCMD.Parameters.AddWithValue("@pass", box_pass.Text);
                                 myCMD.ExecuteNonQuery();
                                 clean_boxes();
+                                error_message_username.Text = "Register Successfull!";
                             }
                             else
                             {
-                                myCMD.CommandText = "INSERT INTO users([Username], [Password]) VALUES(@Username, @Password)";
+                                myCMD.CommandText = "INSERT into dbo.users ([Username],[Password]) VALUES (@name,@pass)";
                                 myCMD.Parameters.AddWithValue("@Name", box_username.Text);
                                 myCMD.Parameters.AddWithValue("@Password", box_pass.Text);
                                 clean_boxes();
@@ -155,8 +171,8 @@ namespace clone
         }
         private bool check_if_first_user_being_created()
         {
-            OleDbCommand readCommand = new OleDbCommand("SELECT * from  users ", myDatabase); //why select * but not select username
-            reader = readCommand.ExecuteReader();
+            SqlCommand readCommand = new SqlCommand("SELECT * from  users ", myDatabase); //why select * but not select username
+            //reader = readCommand.ExecuteReader();
 
             int id;
             string nick;

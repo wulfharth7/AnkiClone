@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 
 
 namespace clone
@@ -17,7 +17,9 @@ namespace clone
     {
         deckControl deck_page = new deckControl();
         LoginPage loginPage1 = new LoginPage();
-        
+        Stats stat_page = new Stats();
+        private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
+        SqlConnection myDatabase = new SqlConnection(connectionstring);
         public Form1()
         {
             InitializeComponent();
@@ -28,7 +30,8 @@ namespace clone
         {
             panel1.Controls.Add(loginPage1);
             panel1.Controls.Add(deck_page);
-            
+            panel1.Controls.Add(stat_page);
+
         }
 
         private void Decks_Button_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -62,6 +65,8 @@ namespace clone
             if (loginPage1.Visible == false)
             {
                 panel1.Controls.Clear();
+                panel1.Controls.Add(stat_page);
+                stat_page.Show();
             }
         }
 
@@ -80,35 +85,33 @@ namespace clone
 
         }
         private void user_database_settings()
-        {
-            try { 
-            OleDbConnection myDatabase = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;" + @"Data Source= C:\Users\erknn\Desktop\deneme proje\clone\anki.accdb");
-            OleDbCommand cmd = myDatabase.CreateCommand();
+        {   
+            string readingCommand = "Select * from users";
             myDatabase.Open();
-            
-            var schema = myDatabase.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
-            if (schema.Rows.OfType<DataRow>().Any(r => r.ItemArray[2].ToString().ToLower() == "users"))
-            {
-                myDatabase.Close();//table exists
-            }
-            else
-            {
-                //if doesn't exist, create table
-                string strTemp = "UserID AUTOINCREMENT PRIMARY KEY, [Username] Text, [Password] Text ";
-                OleDbCommand myCommand = new OleDbCommand();
-                myCommand.Connection = myDatabase;
+            try
+            { 
+                SqlCommand cmd = new SqlCommand(readingCommand);
+                cmd.Connection = myDatabase;
+                try
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
 
-                myCommand.CommandText = "CREATE TABLE users(" + strTemp + ")";
-                myCommand.ExecuteNonQuery();
-                string space = "";
-               // myCommand.CommandText = "INSERT INTO users([Username], [Password]) VALUES ('" + space + "' , '" + space + "')";
-                    myCommand.CommandText= "INSERT INTO users([Username], [Password]) VALUES(@Username, @Password)";
-                    myCommand.Parameters.AddWithValue("@Name", space);
-                    myCommand.Parameters.AddWithValue("@Password", space);
-                    myCommand.ExecuteNonQuery();
+                }
+                catch
+                {
+                    //if doesn't exist, create table
+                    string strTemp = "create table users (UserID int NOT NULL    IDENTITY    PRIMARY KEY,[Username] varchar(50),[Password] varchar(50));";
+                    cmd.CommandText = strTemp;
+                    cmd.ExecuteNonQuery();
+                    string space = "";
+                    string saveStaff = "INSERT into dbo.users ([Username],[Password]) VALUES (@name,@pass)";
+                    cmd.CommandText =saveStaff;
+                    cmd.Parameters.AddWithValue("@name", space);
+                    cmd.Parameters.AddWithValue("@pass", space);
+                    cmd.ExecuteNonQuery();
+                    //if doesn't exist, create table
+                }
                 myDatabase.Close();
-                //if doesn't exist, create table
-            }
             }
             catch
             {
@@ -117,25 +120,31 @@ namespace clone
         } //creates a table if doesn't exist at the beginning of the program for users.
         private void set_user_name_label()
         {
-            OleDbConnection myDatabase = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;" + @"Data Source= C:\Users\erknn\Desktop\deneme proje\clone\anki.accdb");
-            OleDbCommand cmd = myDatabase.CreateCommand();
             myDatabase.Open();
-            OleDbCommand readCommand = new OleDbCommand("SELECT * from  users ", myDatabase); //why select * but not select username, whats foreach
-            OleDbDataReader reader = readCommand.ExecuteReader();
+            string readingCommand = "SELECT * from  users ";
+            SqlCommand readCommand = new SqlCommand(readingCommand, myDatabase); //why select * but not select username, whats foreach
+            SqlDataReader reader = readCommand.ExecuteReader();
 
-            if (reader.Read() && deck_page.get_isLoggedOff() == false && loginPage1.Visible==false)
+            while (reader.Read())
             {
-                lblUserName.Text = "  Logged user: " + reader.GetString(1);
-                deck_page.set_username(reader.GetString(1));
-                
+                int id = reader.GetInt32(0);
+                if (deck_page.get_isLoggedOff() == false && loginPage1.Visible == false)
+                {
+                    if (loginPage1.get_UserID() == id)
+                    {
+                        lblUserName.Text = "  Logged user: " + reader.GetString(1);
+                        deck_page.set_username(reader.GetString(1));
+                    }
+                }
             }
-            if( deck_page.get_isLoggedOff()==true)
+            if (deck_page.get_isLoggedOff() == true)
             {
                 lblUserName.Text = "  Logged user: -";
             }
             myDatabase.Close();
         }
-        private void check_for_user_login() {
+        private void check_for_user_login()
+        {
             if (deck_page.get_isLoggedOff() == true) //if logged off
             {
                 panel1.Controls.Clear();

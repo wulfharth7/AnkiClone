@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace clone
 {
     public partial class input_box_form : Form
     {
+        private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
+        SqlConnection myDatabase = new SqlConnection(connectionstring);
         public input_box_form()
         {
             InitializeComponent();
@@ -30,12 +32,11 @@ namespace clone
         }
         private void database_settings_for_decks()
         {
-            OleDbConnection myDatabase = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;" + @"Data Source= C:\Users\erknn\Desktop\deneme proje\clone\anki.accdb");
-            OleDbCommand cmd = myDatabase.CreateCommand();
+            
+            SqlCommand cmd = myDatabase.CreateCommand();
             myDatabase.Open();
-
-            var schema = myDatabase.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
-            if (schema.Rows.OfType<DataRow>().Any(r => r.ItemArray[2].ToString().ToLower() == boxInput.Text))
+            DataTable table = myDatabase.GetSchema("Tables");
+            if (table.Rows.Contains(boxInput))
             {
                 MessageBox.Show("Deck already exists!");
                 myDatabase.Close();//table exists
@@ -44,13 +45,14 @@ namespace clone
             {
                 try
                 {//if doesn't exist, create table
-                    string strTemp = "DeckOwnerID Text, [Front_Face] Text, [Back_Face] Text, [FRONT_LANG] Text, [BACK_LANG] Text ";
-                    OleDbCommand myCommand = new OleDbCommand();
+                    SqlCommand myCommand = new SqlCommand("create table users (UserID int NOT NULL    IDENTITY    PRIMARY KEY,[Front_Face] varchar(50),[Back_Face] varchar(50),[FRONT_LANG] varchar(50),[BACK_LANG] varchar(50));", myDatabase);
                     myCommand.Connection = myDatabase;
-                    myCommand.CommandText = "CREATE TABLE " + boxInput.Text + "(" + strTemp + ")";
                     myCommand.ExecuteNonQuery();
                     string space = "";
-                    myCommand.CommandText = "INSERT INTO " + boxInput.Text + "([Front_Face], [Back_Face], [FRONT_LANG], [BACK_LANG]) VALUES ('" + space + "' , '" + space + "','" + space + "','" + space + "')";
+                    myCommand.CommandText = "INSERT INTO dbo.@1 ([Front_Face], [Back_Face], [FRONT_LANG], [BACK_LANG]) VALUES (@2,@3,@4,@5)";
+                    myCommand.Parameters.AddWithValue("@1", boxInput); 
+                    myCommand.Parameters.AddWithValue("@2", space); myCommand.Parameters.AddWithValue("@3", space);
+                    myCommand.Parameters.AddWithValue("@4", space); myCommand.Parameters.AddWithValue("@5", space);
                     myCommand.ExecuteNonQuery();
                     myDatabase.Close();
                     //if doesn't exist, create table

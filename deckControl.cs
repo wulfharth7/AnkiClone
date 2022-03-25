@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using Microsoft.VisualBasic;
 
 
@@ -15,6 +15,8 @@ namespace clone
 {
     public partial class deckControl : UserControl
     {
+        private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
+        SqlConnection myDatabase = new SqlConnection(connectionstring);
         Deck_User Deck_Owner = new Deck_User();
 
         private string username;
@@ -63,11 +65,10 @@ namespace clone
         }
         private void set_user_variables()
         {
-            OleDbConnection myDatabase = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;" + @"Data Source= C:\Users\erknn\Desktop\deneme proje\clone\anki.accdb");
-            OleDbCommand cmd = myDatabase.CreateCommand();
+            SqlCommand cmd = myDatabase.CreateCommand();
             set_deck_names(myDatabase, cmd);
         }
-        private void set_deck_names(OleDbConnection myDatabase, OleDbCommand mycmd)
+        private void set_deck_names(SqlConnection myDatabase, SqlCommand mycmd)
         {
             myDatabase.Open();
             var selectNames = get_table_names(myDatabase);
@@ -116,8 +117,8 @@ namespace clone
                     deck_1.Size = new Size(270, 20);
                     Controls.Add(deck_1);
                     deck_1.Show();
-                    deck_1.BringToFront();
                     y = y + 24;
+                    card_count_from_deck();
                 }
             }
             catch
@@ -126,10 +127,26 @@ namespace clone
             }
 
         }
-        private DataRow[] get_table_names(OleDbConnection myDatabase)
+        private void card_count_from_deck()
         {
-            DataTable dt = myDatabase.GetSchema("Tables");
-            return dt.Rows.Cast<DataRow>().Where(c => !c["TABLE_NAME"].ToString().Contains("MSys")).ToArray();
+            //open the database and count the cards
+            int count = 0;
+            Label lblCount = new Label();
+            lblCount.Location = new Point(379, 39);
+            lblCount.Text = Convert.ToString(count);
+            lblCount.ForeColor = Color.Green;
+            lblCount.BackColor = Color.LightGray;
+            lblCount.AutoSize = true;
+            Controls.Add(lblCount);
+            lblCount.Show();
+            lblCount.BringToFront();
+        }
+
+        private DataRow[] get_table_names(SqlConnection myDatabase)
+        {
+            DataTable table = myDatabase.GetSchema("Tables");
+            DataRow[] rows = table.Select();
+            return rows;
         }
     }
 }

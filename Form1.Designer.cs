@@ -32,7 +32,6 @@ namespace clone
             this.components = new System.ComponentModel.Container();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.Decks_Button = new System.Windows.Forms.LinkLabel();
-            this.Add_Button = new System.Windows.Forms.LinkLabel();
             this.Brows_Button = new System.Windows.Forms.LinkLabel();
             this.Stats_Button = new System.Windows.Forms.LinkLabel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -55,7 +54,7 @@ namespace clone
             this.Decks_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.Decks_Button.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.Decks_Button.LinkColor = System.Drawing.Color.Black;
-            this.Decks_Button.Location = new System.Drawing.Point(194, 42);
+            this.Decks_Button.Location = new System.Drawing.Point(205, 42);
             this.Decks_Button.Name = "Decks_Button";
             this.Decks_Button.Size = new System.Drawing.Size(65, 17);
             this.Decks_Button.TabIndex = 1;
@@ -64,29 +63,13 @@ namespace clone
             this.Decks_Button.UseCompatibleTextRendering = true;
             this.Decks_Button.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Decks_Button_LinkClicked);
             // 
-            // Add_Button
-            // 
-            this.Add_Button.ActiveLinkColor = System.Drawing.Color.Transparent;
-            this.Add_Button.DisabledLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(133)))), ((int)(((byte)(133)))), ((int)(((byte)(133)))));
-            this.Add_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.Add_Button.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.Add_Button.LinkColor = System.Drawing.Color.Black;
-            this.Add_Button.Location = new System.Drawing.Point(289, 42);
-            this.Add_Button.Name = "Add_Button";
-            this.Add_Button.Size = new System.Drawing.Size(49, 17);
-            this.Add_Button.TabIndex = 2;
-            this.Add_Button.TabStop = true;
-            this.Add_Button.Text = "Add";
-            this.Add_Button.UseCompatibleTextRendering = true;
-            this.Add_Button.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Add_Button_LinkClicked);
-            // 
             // Brows_Button
             // 
             this.Brows_Button.ActiveLinkColor = System.Drawing.Color.Transparent;
             this.Brows_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.Brows_Button.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.Brows_Button.LinkColor = System.Drawing.Color.Black;
-            this.Brows_Button.Location = new System.Drawing.Point(374, 42);
+            this.Brows_Button.Location = new System.Drawing.Point(333, 42);
             this.Brows_Button.Name = "Brows_Button";
             this.Brows_Button.Size = new System.Drawing.Size(73, 17);
             this.Brows_Button.TabIndex = 3;
@@ -101,7 +84,7 @@ namespace clone
             this.Stats_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.Stats_Button.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.Stats_Button.LinkColor = System.Drawing.Color.Black;
-            this.Stats_Button.Location = new System.Drawing.Point(483, 42);
+            this.Stats_Button.Location = new System.Drawing.Point(473, 42);
             this.Stats_Button.Name = "Stats_Button";
             this.Stats_Button.Size = new System.Drawing.Size(58, 17);
             this.Stats_Button.TabIndex = 4;
@@ -148,7 +131,6 @@ namespace clone
             this.Controls.Add(this.lblUserName);
             this.Controls.Add(this.Stats_Button);
             this.Controls.Add(this.Brows_Button);
-            this.Controls.Add(this.Add_Button);
             this.Controls.Add(this.Decks_Button);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.panel1);
@@ -169,7 +151,6 @@ namespace clone
 
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.LinkLabel Decks_Button;
-        private System.Windows.Forms.LinkLabel Add_Button;
         private System.Windows.Forms.LinkLabel Brows_Button;
         private System.Windows.Forms.LinkLabel Stats_Button;
         private System.Windows.Forms.Panel panel1;
