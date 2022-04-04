@@ -27,42 +27,61 @@ namespace clone
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            database_settings_for_decks();
+            create_table();
             this.Dispose();
         }
-        private void database_settings_for_decks()
+        private void create_table()
         {
-            
             SqlCommand cmd = myDatabase.CreateCommand();
             myDatabase.Open();
-            DataTable table = myDatabase.GetSchema("Tables");
-            if (table.Rows.Contains(boxInput))
+            
+            if (get_table_names() == true)
             {
                 MessageBox.Show("Deck already exists!");
-                myDatabase.Close();//table exists
             }
             else
             {
                 try
-                {//if doesn't exist, create table
-                    SqlCommand myCommand = new SqlCommand("create table users (UserID int NOT NULL    IDENTITY    PRIMARY KEY,[Front_Face] varchar(50),[Back_Face] varchar(50),[FRONT_LANG] varchar(50),[BACK_LANG] varchar(50));", myDatabase);
+                {
+                    SqlCommand myCommand = new SqlCommand("create table "+ boxInput.Text +" (UserID int NOT NULL    IDENTITY    PRIMARY KEY,[Front_Face] varchar(50),[Back_Face] varchar(50),[FRONT_LANG] varchar(50),[BACK_LANG] varchar(50))");
                     myCommand.Connection = myDatabase;
                     myCommand.ExecuteNonQuery();
                     string space = "";
-                    myCommand.CommandText = "INSERT INTO dbo.@1 ([Front_Face], [Back_Face], [FRONT_LANG], [BACK_LANG]) VALUES (@2,@3,@4,@5)";
-                    myCommand.Parameters.AddWithValue("@1", boxInput); 
-                    myCommand.Parameters.AddWithValue("@2", space); myCommand.Parameters.AddWithValue("@3", space);
-                    myCommand.Parameters.AddWithValue("@4", space); myCommand.Parameters.AddWithValue("@5", space);
+                    myCommand.CommandText = "INSERT INTO " + boxInput.Text + " ([Front_Face], [Back_Face], [FRONT_LANG], [BACK_LANG]) VALUES (@2,@3,@4,@5)";
+                    myCommand.Parameters.Clear();
+                    myCommand.Parameters.AddWithValue("@2", space);
+                    myCommand.Parameters.AddWithValue("@3", space);
+                    myCommand.Parameters.AddWithValue("@4", space);
+                    myCommand.Parameters.AddWithValue("@5", space);
                     myCommand.ExecuteNonQuery();
-                    myDatabase.Close();
-                    //if doesn't exist, create table
                 }
                 catch
                 {
                     MessageBox.Show("Deck name has to be written!");
                 }
             }
-
+            myDatabase.Close();
+        }
+        private bool get_table_names()
+        {
+            DataTable schema = myDatabase.GetSchema("Tables");
+            List<string> tableNames = new List<string>();
+            foreach (DataRow row in schema.Rows)
+            {
+                tableNames.Add(row[2].ToString());
+            }
+            return check_if_table_exists(tableNames);
+        }
+        private bool check_if_table_exists(List<string> tablenames)
+        {
+            if (tablenames.Contains(boxInput.Text))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

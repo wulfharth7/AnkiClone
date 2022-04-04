@@ -30,8 +30,6 @@ namespace clone
         {
             panel1.Controls.Add(loginPage1);
             panel1.Controls.Add(deck_page);
-            panel1.Controls.Add(stat_page);
-
         }
 
         private void Decks_Button_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -39,6 +37,7 @@ namespace clone
             if (loginPage1.Visible == false)
             {
                 panel1.Controls.Clear();
+                //deck_page.Controls.Clear();
                 panel1.Controls.Add(deck_page);
                 deck_page.Show();
             }
@@ -99,13 +98,14 @@ namespace clone
                 }
                 catch
                 {
+                    cmd.Parameters.Clear();
                     //if doesn't exist, create table
                     string strTemp = "create table users (UserID int NOT NULL    IDENTITY    PRIMARY KEY,[Username] varchar(50),[Password] varchar(50));";
                     cmd.CommandText = strTemp;
                     cmd.ExecuteNonQuery();
                     string space = "";
                     string saveStaff = "INSERT into dbo.users ([Username],[Password]) VALUES (@name,@pass)";
-                    cmd.CommandText =saveStaff;
+                    cmd.CommandText = saveStaff;
                     cmd.Parameters.AddWithValue("@name", space);
                     cmd.Parameters.AddWithValue("@pass", space);
                     cmd.ExecuteNonQuery();

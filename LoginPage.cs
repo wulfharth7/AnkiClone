@@ -32,13 +32,13 @@ namespace clone
         public LoginPage()
         {
             InitializeComponent();
-            
+
         }
 
         private void UserControl1_Load(object sender, EventArgs e)
         {
             box_pass.PasswordChar = '*'; //hides pass
-           
+
 
         }
 
@@ -53,16 +53,14 @@ namespace clone
                 box_pass.PasswordChar = '*'; //hides pass
             }
         } //checkbox for showing password
-        //kayıt kismini coklu kisi yap, tek kisiye calisiyor
+
         private void button2_Click(object sender, EventArgs e) //button for login
         {
-  
-            myDatabase.Open(); //i've coded the same thing twice, how to fix this in the function?
+            myDatabase.Open();
             SqlCommand readCommand = new SqlCommand("SELECT * from  users ", myDatabase); //why select * but not select username, whats foreach
             reader = readCommand.ExecuteReader();
             while (reader.Read())
             {
-                
                 string nick = reader.GetString(1);
                 string pass = reader.GetString(2);
                 if (nick == box_username.Text)
@@ -71,7 +69,7 @@ namespace clone
                     {
                         int id = reader.GetInt32(0);
                         error_message_username.Text = "";
-                        this.set_UserID(id); 
+                        this.set_UserID(id);
                         this.Hide();
                         clean_boxes();
                     }
@@ -89,81 +87,64 @@ namespace clone
             myDatabase.Close();
         }
         private void btnRegister_Click(object sender, EventArgs e) //button for register
-        {  
+        {
             myDatabase.Open();
-            SqlCommand readCommand = new SqlCommand("SELECT * from  users ", myDatabase); //why select * but not select username
+            string reader_command = "SELECT * from  users ";
+            SqlCommand readCommand = new SqlCommand(reader_command, myDatabase); //why select * but not select username
             reader = readCommand.ExecuteReader();
-            
             if (reader.Read())
-            { 
+            {
                 if (box_username.Text != "")
                 {
-                    if (box_username.Text == "")
+                    myCMD.Connection = myDatabase;
+                    error_message_username.Text = "";
+                    if (box_pass.Text == "")
                     {
-                        error_message_username.Text = "Enter a username first.";
-                    }
-                    else
-                    {
-                        myCMD.Connection = myDatabase;
-                        error_message_username.Text = "";
-                        if (box_pass.Text == "")
-                        {
-                            DialogResult dialogresult = MessageBox.Show("Are you sure that you don't want to set a password?", "Important!", MessageBoxButtons.YesNo);
+                        DialogResult dialogresult = MessageBox.Show("Are you sure that you don't want to set a password?", "Important!", MessageBoxButtons.YesNo);
 
-                            if (dialogresult == DialogResult.Yes)
-                            {
-                                if (check_if_first_user_being_created())
-                                {
-                                    myCMD.CommandText = "Update users SET [Username]= @name ,[Password]= @pass";
-                                    myCMD.Parameters.AddWithValue("@name",box_username.Text);
-                                    myCMD.Parameters.AddWithValue("@pass",box_pass.Text);
-                                    myCMD.ExecuteNonQuery();
-                                }
-                                else
-                                {
-                                    myCMD.CommandText = "INSERT into dbo.users ([Username],[Password]) VALUES (@name,@pass)";
-                                    myCMD.Parameters.AddWithValue("@Name", box_username.Text);
-                                    myCMD.Parameters.AddWithValue("@Password", box_pass.Text);
-                                    clean_boxes();
-                                    error_message_username.Text = "Succesfully registered!";
-                                    myCMD.ExecuteNonQuery();
-                                }
-                               
-                            }
-                            else if (dialogresult == DialogResult.No)
-                            {
-
-                            }
-                        }
-                        else
+                        if (dialogresult == DialogResult.Yes)
                         {
-                            myCMD.Connection = myDatabase;
-                            if (check_if_first_user_being_created())
+                            if (check_if_first_user_being_created() == true)
                             {
-                                myCMD.CommandText = "Update users SET [Username]= @name ,[Password]= @pass";
-                                myCMD.Parameters.AddWithValue("@name", box_username.Text);
-                                myCMD.Parameters.AddWithValue("@pass", box_pass.Text);
-                                myCMD.ExecuteNonQuery();
-                                clean_boxes();
-                                error_message_username.Text = "Register Successfull!";
+                                update_register();
                             }
                             else
                             {
-                                myCMD.CommandText = "INSERT into dbo.users ([Username],[Password]) VALUES (@name,@pass)";
-                                myCMD.Parameters.AddWithValue("@Name", box_username.Text);
-                                myCMD.Parameters.AddWithValue("@Password", box_pass.Text);
-                                clean_boxes();
-                                error_message_username.Text = "Succesfully registered!";
-                                myCMD.ExecuteNonQuery();
+                                bool already_exists_user = check_if_user_exists_already(box_username.Text);
+                                if (already_exists_user == true)
+                                {
+                                    error_message_username.Text = "You've already registered!";
+                                }
+                                insert_register(already_exists_user);
                             }
-                            
+
+                        }
+                        else if (dialogresult == DialogResult.No)
+                        {
+
+                        }
+                    }
+                    else
+                    {
+                        if (check_if_first_user_being_created() == true)
+                        {
+                            update_register();
+                        }
+                        else
+                        {
+                            bool already_exists_user = check_if_user_exists_already(box_username.Text);
+                            if (already_exists_user == true)
+                            {
+                                error_message_username.Text = "You've already registered!";
+                            }
+                            insert_register(already_exists_user);
                         }
 
                     }
                 }
                 else
                 {
-                    error_message_username.Text = "You've already registered!";
+                    error_message_username.Text = "Enter a username first.";
                 }
             }
 
@@ -172,7 +153,7 @@ namespace clone
         private bool check_if_first_user_being_created()
         {
             SqlCommand readCommand = new SqlCommand("SELECT * from  users ", myDatabase); //why select * but not select username
-            //reader = readCommand.ExecuteReader();
+            reader = readCommand.ExecuteReader();
 
             int id;
             string nick;
@@ -180,6 +161,7 @@ namespace clone
             {
                 id = reader.GetInt32(0);
                 nick = reader.GetString(1);
+                //MessageBox.Show(nick);
                 if (id == 1 && nick == "")
                 {
                     return true;
@@ -193,13 +175,62 @@ namespace clone
             {
                 return true;
             }
-            
-        }
 
+        }
+        private bool check_if_user_exists_already(string name)
+        {
+            myCMD.Parameters.Clear();
+
+
+            //SELECT COUNT(*) from users where user_name like @username
+            string reader_command = "SELECT COUNT(*) from [users] where [username]=@name";
+            SqlCommand readCommand = new SqlCommand(reader_command, myDatabase);
+            readCommand.Parameters.AddWithValue("@name", name);
+            int userCount = (int)readCommand.ExecuteScalar();
+            if (userCount > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+
+
+        }
         private void clean_boxes()
         {
             box_username.Text = "";
             box_pass.Text = "";
+        }
+        private void insert_register(bool already_exists_user)
+        {
+            if (already_exists_user == false)
+            {
+                myCMD.Parameters.Clear();
+                myCMD.CommandText = "INSERT into dbo.users ([Username],[Password]) VALUES (@name,@pass)";
+                myCMD.Parameters.AddWithValue("@Name", box_username.Text);
+                myCMD.Parameters.AddWithValue("@pass", box_pass.Text);
+                clean_boxes();
+                error_message_username.Text = "Succesfully registered!";
+                myCMD.ExecuteNonQuery();
+            }
+            else
+            {
+                clean_boxes();
+            }
+        }
+        private void update_register()
+        {
+            myCMD.Parameters.Clear();
+            myCMD.CommandText = "Update users SET [Username]= @name ,[Password]= @pass";
+            myCMD.Parameters.AddWithValue("@name", box_username.Text);
+            myCMD.Parameters.AddWithValue("@pass", box_pass.Text);
+            myCMD.ExecuteNonQuery();
+            clean_boxes();
+            error_message_username.Text = "Register Successfull!";
         }
     }
 }

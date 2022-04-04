@@ -12,8 +12,15 @@ namespace clone
     {
         private string front_face, back_face, front_language, back_language;
         private string Deck_Name;
-        private int Card_Count;
 
+        public string get_deckname()
+        {
+            return Deck_Name;
+        }
+        public void set_deckname(string variable)
+        {
+            Deck_Name = variable;
+        }
 
         public Decks(){ }
 

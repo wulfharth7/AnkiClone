@@ -43,6 +43,7 @@ namespace clone
             // progressBar1
             // 
             this.progressBar1.BackColor = System.Drawing.SystemColors.Control;
+            this.progressBar1.ForeColor = System.Drawing.SystemColors.Control;
             this.progressBar1.Location = new System.Drawing.Point(0, 32);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(741, 39);
@@ -51,45 +52,54 @@ namespace clone
             // Decks_Button
             // 
             this.Decks_Button.ActiveLinkColor = System.Drawing.Color.Transparent;
-            this.Decks_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.Decks_Button.BackColor = System.Drawing.SystemColors.Control;
+            this.Decks_Button.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Decks_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.Decks_Button.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.Decks_Button.LinkColor = System.Drawing.Color.Black;
-            this.Decks_Button.Location = new System.Drawing.Point(205, 42);
+            this.Decks_Button.Location = new System.Drawing.Point(195, 38);
             this.Decks_Button.Name = "Decks_Button";
-            this.Decks_Button.Size = new System.Drawing.Size(65, 17);
+            this.Decks_Button.Size = new System.Drawing.Size(68, 27);
             this.Decks_Button.TabIndex = 1;
             this.Decks_Button.TabStop = true;
             this.Decks_Button.Text = "Decks";
+            this.Decks_Button.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Decks_Button.UseCompatibleTextRendering = true;
             this.Decks_Button.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Decks_Button_LinkClicked);
             // 
             // Brows_Button
             // 
             this.Brows_Button.ActiveLinkColor = System.Drawing.Color.Transparent;
-            this.Brows_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.Brows_Button.BackColor = System.Drawing.SystemColors.Control;
+            this.Brows_Button.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Brows_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.Brows_Button.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.Brows_Button.LinkColor = System.Drawing.Color.Black;
-            this.Brows_Button.Location = new System.Drawing.Point(333, 42);
+            this.Brows_Button.Location = new System.Drawing.Point(336, 38);
             this.Brows_Button.Name = "Brows_Button";
-            this.Brows_Button.Size = new System.Drawing.Size(73, 17);
+            this.Brows_Button.Size = new System.Drawing.Size(68, 27);
             this.Brows_Button.TabIndex = 3;
             this.Brows_Button.TabStop = true;
             this.Brows_Button.Text = "Browse";
+            this.Brows_Button.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Brows_Button.UseCompatibleTextRendering = true;
             this.Brows_Button.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Brows_Button_LinkClicked);
             // 
             // Stats_Button
             // 
             this.Stats_Button.ActiveLinkColor = System.Drawing.Color.Transparent;
-            this.Stats_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.Stats_Button.BackColor = System.Drawing.SystemColors.Control;
+            this.Stats_Button.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Stats_Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.Stats_Button.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.Stats_Button.LinkColor = System.Drawing.Color.Black;
-            this.Stats_Button.Location = new System.Drawing.Point(473, 42);
+            this.Stats_Button.Location = new System.Drawing.Point(480, 38);
             this.Stats_Button.Name = "Stats_Button";
-            this.Stats_Button.Size = new System.Drawing.Size(58, 17);
+            this.Stats_Button.Size = new System.Drawing.Size(68, 27);
             this.Stats_Button.TabIndex = 4;
             this.Stats_Button.TabStop = true;
             this.Stats_Button.Text = "Stats";
+            this.Stats_Button.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.Stats_Button.UseCompatibleTextRendering = true;
             this.Stats_Button.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Stats_Button_LinkClicked);
             // 

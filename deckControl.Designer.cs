@@ -32,7 +32,6 @@ namespace clone
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnCreateDeck = new System.Windows.Forms.Button();
-            this.btnExprtFile = new System.Windows.Forms.Button();
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnRefreshDecks = new System.Windows.Forms.Button();
             this.lblNoDeck = new System.Windows.Forms.Label();
@@ -68,15 +67,6 @@ namespace clone
             this.btnCreateDeck.UseVisualStyleBackColor = true;
             this.btnCreateDeck.Click += new System.EventHandler(this.btnCreateDeck_Click);
             // 
-            // btnExprtFile
-            // 
-            this.btnExprtFile.Location = new System.Drawing.Point(291, 381);
-            this.btnExprtFile.Name = "btnExprtFile";
-            this.btnExprtFile.Size = new System.Drawing.Size(120, 31);
-            this.btnExprtFile.TabIndex = 3;
-            this.btnExprtFile.Text = "Export Files";
-            this.btnExprtFile.UseVisualStyleBackColor = true;
-            // 
             // btnLogout
             // 
             this.btnLogout.Location = new System.Drawing.Point(417, 381);
@@ -89,7 +79,7 @@ namespace clone
             // 
             // btnRefreshDecks
             // 
-            this.btnRefreshDecks.Location = new System.Drawing.Point(291, 344);
+            this.btnRefreshDecks.Location = new System.Drawing.Point(291, 381);
             this.btnRefreshDecks.Name = "btnRefreshDecks";
             this.btnRefreshDecks.Size = new System.Drawing.Size(120, 31);
             this.btnRefreshDecks.TabIndex = 5;
@@ -99,9 +89,9 @@ namespace clone
             // 
             // lblNoDeck
             // 
-            this.lblNoDeck.Location = new System.Drawing.Point(185, 57);
+            this.lblNoDeck.Location = new System.Drawing.Point(126, 57);
             this.lblNoDeck.Name = "lblNoDeck";
-            this.lblNoDeck.Size = new System.Drawing.Size(352, 23);
+            this.lblNoDeck.Size = new System.Drawing.Size(463, 23);
             this.lblNoDeck.TabIndex = 6;
             // 
             // deckControl
@@ -111,7 +101,6 @@ namespace clone
             this.Controls.Add(this.lblNoDeck);
             this.Controls.Add(this.btnRefreshDecks);
             this.Controls.Add(this.btnLogout);
-            this.Controls.Add(this.btnExprtFile);
             this.Controls.Add(this.btnCreateDeck);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -128,7 +117,6 @@ namespace clone
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnCreateDeck;
-        private System.Windows.Forms.Button btnExprtFile;
         private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.Button btnRefreshDecks;
         private System.Windows.Forms.Label lblNoDeck;
