@@ -13,6 +13,9 @@ namespace clone
 {
     public partial class add_edit_cards : UserControl
     {
+        public delegate void StatusUpdateHandler(object sender, EventArgs e);
+        public event StatusUpdateHandler OnUpdateStatus;
+
         private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
         SqlConnection myDatabase = new SqlConnection(connectionstring);
         private string table_name;
@@ -41,17 +44,14 @@ namespace clone
                 if(check_if_first_card() == true)
                 {
                     update_table();
-                    //change panel
-                    change_table_to_edit();
-                    this.Dispose();
+                    UpdateStatus();
                 }
                 else
                 {
                     insert_table();
-                    //change panel
-                    change_table_to_edit();
-                    this.Dispose();
+                    UpdateStatus();
                 }
+                this.Dispose();
             }
             
         }
@@ -116,13 +116,7 @@ namespace clone
             move_controls_upwards();
             this.Dispose();
         }
-        private void change_table_to_edit()
-        {
-            edit_cards group_box_edit_cards = new edit_cards(txtBox_term.Text, txtBox_definition.Text);
-            this.Parent.Controls.Add(group_box_edit_cards);
-            group_box_edit_cards.Show();
-            group_box_edit_cards.Location = new Point(this.Location.X, this.Location.Y);
-        }
+
         private void move_controls_upwards()
         {
             foreach (Control c in this.Parent.Controls)
@@ -132,6 +126,14 @@ namespace clone
                     c.Top -= 100;
                 }
             }
+        }
+        private void UpdateStatus()
+        {
+            //Create arguments.  You should also have custom one, or else return EventArgs.Empty();
+            EventArgs args = new EventArgs();
+
+            //Call any listeners
+            OnUpdateStatus?.Invoke(this, args);
         }
     }
 }

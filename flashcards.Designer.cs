@@ -36,7 +36,7 @@ namespace clone
             this.lblCardCount = new System.Windows.Forms.Label();
             this.show_next_card = new System.Windows.Forms.LinkLabel();
             this.show_previous_card = new System.Windows.Forms.LinkLabel();
-            this.btn_study_flashcards = new System.Windows.Forms.Button();
+            this.btn_study = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.lblBack = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -145,15 +145,15 @@ namespace clone
             this.show_previous_card.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.show_previous_card.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.show_previous_card_LinkClicked);
             // 
-            // btn_study_flashcards
+            // btn_study
             // 
-            this.btn_study_flashcards.Location = new System.Drawing.Point(22, 21);
-            this.btn_study_flashcards.Name = "btn_study_flashcards";
-            this.btn_study_flashcards.Size = new System.Drawing.Size(114, 34);
-            this.btn_study_flashcards.TabIndex = 2;
-            this.btn_study_flashcards.Text = "Flashcards";
-            this.btn_study_flashcards.UseVisualStyleBackColor = true;
-            this.btn_study_flashcards.Click += new System.EventHandler(this.btn_study_Click);
+            this.btn_study.Location = new System.Drawing.Point(22, 21);
+            this.btn_study.Name = "btn_study";
+            this.btn_study.Size = new System.Drawing.Size(114, 34);
+            this.btn_study.TabIndex = 2;
+            this.btn_study.Text = "Flashcards";
+            this.btn_study.UseVisualStyleBackColor = true;
+            this.btn_study.Click += new System.EventHandler(this.btn_study_Click);
             // 
             // button2
             // 
@@ -182,7 +182,7 @@ namespace clone
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.btn_study_flashcards);
+            this.groupBox1.Controls.Add(this.btn_study);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Location = new System.Drawing.Point(19, 75);
             this.groupBox1.Name = "groupBox1";
@@ -287,7 +287,7 @@ namespace clone
 
         private System.Windows.Forms.Label lblDeckname;
         private System.Windows.Forms.GroupBox card_box;
-        private System.Windows.Forms.Button btn_study_flashcards;
+        private System.Windows.Forms.Button btn_study;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.LinkLabel lblBack;
         private System.Windows.Forms.GroupBox groupBox1;

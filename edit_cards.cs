@@ -13,6 +13,8 @@ namespace clone
 {
     public partial class edit_cards : UserControl
     {
+        public delegate void StatusUpdateHandler(object sender, EventArgs e);
+        public event StatusUpdateHandler OnUpdateStatus;
         private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
         SqlConnection myDatabase = new SqlConnection(connectionstring);
 
@@ -64,12 +66,13 @@ namespace clone
             string command = "DELETE FROM " + this.get_tablename() + " WHERE [Front_Face]= @new_face and [Back_Face]= @new_back";
             SqlCommand cmd = new SqlCommand(command, myDatabase);
             cmd.Parameters.Clear();
-            myDatabase.Open(); //error here
+            myDatabase.Open(); 
             cmd.Parameters.AddWithValue("@new_face", txtBox_term.Text);
             cmd.Parameters.AddWithValue("@new_back", txtBox_definition.Text);
             cmd.ExecuteNonQuery();
             myDatabase.Close();
             move_controls_upwards();
+            //UpdateStatus();
             this.Dispose();
         }
 
@@ -85,6 +88,7 @@ namespace clone
             cmd.Parameters.AddWithValue("@prev_back", this.get_face("back"));
             cmd.ExecuteNonQuery();
             myDatabase.Close();
+            UpdateStatus();
         }
         private void move_controls_upwards()
         {
@@ -96,6 +100,15 @@ namespace clone
                 }
             }
         }
-        
+        private void UpdateStatus()
+        {
+            //Create arguments.  You should also have custom one, or else return EventArgs.Empty();
+            EventArgs args = new EventArgs();
+
+            //Call any listeners
+            OnUpdateStatus?.Invoke(this, args);
+
+        }
+
     }
 }

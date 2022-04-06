@@ -19,7 +19,7 @@ namespace clone
         LinkedList<Decks> deck_linked_list = new LinkedList<Decks>();
 
         private int deck_count = 0;
-        public int card = 1;
+        public int card_index_in_linkedlist = 1;
         public int get_count()
         {
             return deck_count;
@@ -60,9 +60,10 @@ namespace clone
         }
         private void read_cards()
         {
+
             myDatabase.Open();
             string readingCommand = "SELECT * FROM " + this.get_deckname() + "";
-            SqlCommand readCommand = new SqlCommand(readingCommand, myDatabase); //why select * but not select username, whats foreach
+            SqlCommand readCommand = new SqlCommand(readingCommand, myDatabase); //why select * but not select username
             SqlDataReader reader = readCommand.ExecuteReader();
 
             while (reader.Read())
@@ -75,12 +76,14 @@ namespace clone
                 else
                 {
                     get_cards_to_LinkedList(reader); // will keep the cards to be shown in a linked list by reading from the DB
+                    creating_box_for_cards_to_edit(reader);
                     design_shown_cards(1); //cards do exist
                 }
             }
             myDatabase.Close();
+            
         }
-
+        
         private void lblBack_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             foreach (Control c in this.Parent.Controls)
@@ -106,6 +109,7 @@ namespace clone
         }
         private void get_cards_to_LinkedList(SqlDataReader reader)
         {
+            
             Decks flashcard = new Decks();
             flashcard.setFront_Face(reader.GetString(1));
             flashcard.setBack_Face(reader.GetString(2));
@@ -121,17 +125,17 @@ namespace clone
                 }
 
             }
-            creating_box_for_cards_to_edit(reader);
+            
         }
         private void design_shown_cards()
         {
-            card--;
-            lblCardCount.Text = Convert.ToString(card)+"/"+deck_linked_list.Count();
+            card_index_in_linkedlist--;
+            lblCardCount.Text = Convert.ToString(card_index_in_linkedlist) +"/"+deck_linked_list.Count();
             lblCards.Text = "You haven't added cards...yet!";
         }
         private void design_shown_cards(int cards_do_exist)
         {
-            lblCardCount.Text = Convert.ToString(card) + "/" + deck_linked_list.Count();
+            lblCardCount.Text = Convert.ToString(card_index_in_linkedlist) + "/" + deck_linked_list.Count();
             lblCards.Text = deck_linked_list.First.Value.getFront_Face();
         }
 
@@ -163,10 +167,10 @@ namespace clone
 
         private void show_next_card_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (card != deck_linked_list.Count())
+            if (card_index_in_linkedlist != deck_linked_list.Count())
             {
-                card++;
-                lblCardCount.Text = Convert.ToString(card) + "/" + deck_linked_list.Count();
+                card_index_in_linkedlist++;
+                lblCardCount.Text = Convert.ToString(card_index_in_linkedlist) + "/" + deck_linked_list.Count();
             
             if (lblCards.Text != deck_linked_list.First.Value.getFront_Face() || lblCards.Text != deck_linked_list.First.Value.getBack_Face())
             {
@@ -177,7 +181,6 @@ namespace clone
                     {
                         var stmh = deck_linked_list.Find(item).Next.Value.getFront_Face();
                         smth = stmh;
-
                     }
                 }
                 lblCards.Text = smth;//try this with a break clause
@@ -187,10 +190,10 @@ namespace clone
 
         private void show_previous_card_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (card != 1 && card != 0)
+            if (card_index_in_linkedlist != 1 && card_index_in_linkedlist != 0)
             {
-                card--;
-                lblCardCount.Text = Convert.ToString(card) + "/" + deck_linked_list.Count();
+                card_index_in_linkedlist--;
+                lblCardCount.Text = Convert.ToString(card_index_in_linkedlist) + "/" + deck_linked_list.Count();
             
             if (lblCards.Text != deck_linked_list.First.Value.getFront_Face() || lblCards.Text != deck_linked_list.First.Value.getBack_Face())
             {
@@ -201,7 +204,6 @@ namespace clone
                     {
                         var stmh = deck_linked_list.Find(item).Previous.Value.getFront_Face();
                         smth = stmh;
-
                     }
                 }
                 lblCards.Text = smth;
@@ -217,22 +219,35 @@ namespace clone
         private void creating_box_for_cards_to_add()
         {
             add_edit_cards group_box_add_cards = new add_edit_cards();
+            group_box_add_cards.OnUpdateStatus += group_box_add_cards_OnUpdateStatus;
             group_box_add_cards.Location = new Point(group_box_card_controls.Location.X, group_box_card_controls.Location.Y);
             group_box_add_cards.set_tablename(deck_name);
             Controls.Add(group_box_add_cards);
         }
+
         private void creating_box_for_cards_to_edit(SqlDataReader reader)
         {
             edit_cards group_box_edit_cards = new edit_cards(reader.GetString(1), reader.GetString(2));
+            group_box_edit_cards.OnUpdateStatus += group_box_edit_cards_OnUpdateStatus;
             group_box_edit_cards.set_tablename(deck_name);
             group_box_edit_cards.Location = new Point(group_box_card_controls.Location.X, group_box_card_controls.Location.Y);
             Controls.Add(group_box_edit_cards);
-            group_box_edit_cards.Show();
-            group_box_card_controls.Location = new Point(group_box_card_controls.Location.X, group_box_card_controls.Location.Y + 100);
+            move_card_controls_box();
         }
         private void move_card_controls_box()
         {
             group_box_card_controls.Location = new Point(group_box_card_controls.Location.X, group_box_card_controls.Location.Y + 100);
         }
+        private void group_box_add_cards_OnUpdateStatus(object sender, EventArgs e)
+        {
+            
+        }
+        private void group_box_edit_cards_OnUpdateStatus(object sender, EventArgs e)
+        {
+            card_index_in_linkedlist = 1;
+            design_shown_cards(1);
+        }
+        
+       
     }
 }
