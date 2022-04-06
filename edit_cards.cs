@@ -18,52 +18,22 @@ namespace clone
         private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
         SqlConnection myDatabase = new SqlConnection(connectionstring);
 
-        private string table_name;
-        public string get_tablename()
-        {
-            return table_name;
-        }
-        public void set_tablename(string table)
-        {
-            table_name = table;
-        }
-        private string front_face, back_face;
-        public void set_frontface(string variable)
-        {
-            front_face = variable;
-        }
-        public void set_backface(string variable)
-        {
-            back_face = variable;
-        }
-        public string get_face(string name)
-        {
-            if(name == "front")
-            {
-                return front_face;
-            }
-            else if(name== "back")
-            {
-                return back_face;
-            }
-            else
-            {
-                return "you donged it up";
-            }
-        }
-        public edit_cards(string front_face, string back_face)
+     
+        private Decks temp;
+        private LinkedList<Decks> temp_llist;
+        public edit_cards(ref Decks flashcard, LinkedList<Decks> linkedlistdeck)
         {
             InitializeComponent();
-            set_backface(back_face);
-            set_frontface(front_face);
-            txtBox_term.Text = get_face("front");
-            txtBox_definition.Text = get_face("back");
+            temp_llist = linkedlistdeck;
+            fill_text_boxes(ref flashcard);
+            temp = flashcard;
+            
         }
 
         private void btnDeleteCard_Click(object sender, EventArgs e)
         {
             //ADD HERE A COUNT THING AND IF IT IS ONLY ONE 1 LEFT, UPDATE TO SPACE OTHERWISE IT'LL CRASH TO THE DEATH
-            string command = "DELETE FROM " + this.get_tablename() + " WHERE [Front_Face]= @new_face and [Back_Face]= @new_back";
+            string command = "DELETE FROM " + temp.get_deckname() + " WHERE [Front_Face]= @new_face and [Back_Face]= @new_back";
             SqlCommand cmd = new SqlCommand(command, myDatabase);
             cmd.Parameters.Clear();
             myDatabase.Open(); 
@@ -72,20 +42,24 @@ namespace clone
             cmd.ExecuteNonQuery();
             myDatabase.Close();
             move_controls_upwards();
-            //UpdateStatus();
+            temp_llist.Remove(temp);
+            UpdateStatus();
             this.Dispose();
         }
 
         private void button6_Click(object sender, EventArgs e) //edit_button
         {
-            string command = "Update " + this.get_tablename() + " SET [Front_Face]= @new_face ,[Back_Face]= @new_back WHERE [Front_Face]= @prev_face and [Back_Face]= @prev_back";
+            MessageBox.Show(temp.getFront_Face());
+            string command = "Update " + temp.get_deckname() + " SET [Front_Face]= @new_face ,[Back_Face]= @new_back WHERE [Front_Face]= @prev_face and [Back_Face]= @prev_back";
             SqlCommand cmd = new SqlCommand(command,myDatabase);
             myDatabase.Open();
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@new_face", txtBox_term.Text);
             cmd.Parameters.AddWithValue("@new_back", txtBox_definition.Text);
-            cmd.Parameters.AddWithValue("@prev_face", this.get_face("front"));
-            cmd.Parameters.AddWithValue("@prev_back", this.get_face("back"));
+            cmd.Parameters.AddWithValue("@prev_face", temp.getFront_Face());//bug is here
+            cmd.Parameters.AddWithValue("@prev_back", temp.getBack_Face());//bug is here
+            temp.setFront_Face(txtBox_term.Text);
+            temp.setBack_Face(txtBox_definition.Text);
             cmd.ExecuteNonQuery();
             myDatabase.Close();
             UpdateStatus();
@@ -108,6 +82,11 @@ namespace clone
             //Call any listeners
             OnUpdateStatus?.Invoke(this, args);
 
+        }
+        private void fill_text_boxes( ref Decks flashcard)
+        {
+            txtBox_term.Text = flashcard.getFront_Face();
+            txtBox_definition.Text = flashcard.getBack_Face();
         }
 
     }

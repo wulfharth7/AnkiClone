@@ -27,9 +27,12 @@ namespace clone
         {
             table_name = table;
         }
-        public add_edit_cards()
+        private Decks flashcard = new Decks();
+        private LinkedList<Decks> temp_llist;
+        public add_edit_cards(LinkedList<Decks> linkedlistdeck)
         {
             InitializeComponent();
+            temp_llist = linkedlistdeck;
         }
 
         private void btn_add_card_Click(object sender, EventArgs e)
@@ -44,11 +47,13 @@ namespace clone
                 if(check_if_first_card() == true)
                 {
                     update_table();
+                    temp_llist.AddLast(flashcard);
                     UpdateStatus();
                 }
                 else
                 {
                     insert_table();
+                    temp_llist.AddLast(flashcard);
                     UpdateStatus();
                 }
                 this.Dispose();
@@ -95,6 +100,9 @@ namespace clone
             myCMD.Parameters.AddWithValue("@pass", txtBox_definition.Text);
             myCMD.ExecuteNonQuery();
             lbl_Error_text.Text = "";
+            flashcard.setFront_Face(txtBox_term.Text);
+            flashcard.setBack_Face(txtBox_definition.Text);
+            flashcard.set_deckname(this.get_tablename());
             myDatabase.Close();
         }
         private void insert_table()
@@ -107,6 +115,9 @@ namespace clone
             myCMD.Parameters.AddWithValue("@Name", txtBox_term.Text);
             myCMD.Parameters.AddWithValue("@pass", txtBox_definition.Text);
             lbl_Error_text.Text = "";
+            flashcard.setFront_Face(txtBox_term.Text);
+            flashcard.setBack_Face(txtBox_definition.Text);
+            flashcard.set_deckname(this.get_tablename());
             myCMD.ExecuteNonQuery();
             myDatabase.Close();
         }
@@ -135,5 +146,6 @@ namespace clone
             //Call any listeners
             OnUpdateStatus?.Invoke(this, args);
         }
+            
     }
 }

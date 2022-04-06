@@ -75,11 +75,13 @@ namespace clone
                 }
                 else
                 {
-                    get_cards_to_LinkedList(reader); // will keep the cards to be shown in a linked list by reading from the DB
-                    creating_box_for_cards_to_edit(reader);
-                    design_shown_cards(1); //cards do exist
+                    Decks flashcard = new Decks();
+                    get_cards_to_LinkedList(reader, flashcard); // will keep the cards to be shown in a linked list by reading from the DB
+                    design_shown_cards(1);
                 }
             }
+            
+            //cards do exist
             myDatabase.Close();
             
         }
@@ -107,10 +109,10 @@ namespace clone
             this.HorizontalScroll.Maximum = 0;
             this.AutoScroll = true;
         }
-        private void get_cards_to_LinkedList(SqlDataReader reader)
-        {
+        private void get_cards_to_LinkedList(SqlDataReader reader, Decks flashcard)
+        {  
             
-            Decks flashcard = new Decks();
+            flashcard.set_deckname(this.get_deckname());
             flashcard.setFront_Face(reader.GetString(1));
             flashcard.setBack_Face(reader.GetString(2));
             if (deck_linked_list.Contains(flashcard) == false)
@@ -118,12 +120,14 @@ namespace clone
                 if (deck_linked_list.Count() == 0)
                 {
                     deck_linked_list.AddFirst(flashcard);
+                    creating_box_for_cards_to_edit(reader, ref flashcard,deck_linked_list);
                 }
                 else
                 {
                     deck_linked_list.AddLast(flashcard);
+                    creating_box_for_cards_to_edit(reader,  ref flashcard, deck_linked_list);
                 }
-
+                
             }
             
         }
@@ -190,7 +194,7 @@ namespace clone
 
         private void show_previous_card_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (card_index_in_linkedlist != 1 && card_index_in_linkedlist != 0)
+            if(card_index_in_linkedlist != 1 && card_index_in_linkedlist != 0)
             {
                 card_index_in_linkedlist--;
                 lblCardCount.Text = Convert.ToString(card_index_in_linkedlist) + "/" + deck_linked_list.Count();
@@ -218,18 +222,17 @@ namespace clone
         }
         private void creating_box_for_cards_to_add()
         {
-            add_edit_cards group_box_add_cards = new add_edit_cards();
+            add_edit_cards group_box_add_cards = new add_edit_cards(deck_linked_list);
             group_box_add_cards.OnUpdateStatus += group_box_add_cards_OnUpdateStatus;
             group_box_add_cards.Location = new Point(group_box_card_controls.Location.X, group_box_card_controls.Location.Y);
             group_box_add_cards.set_tablename(deck_name);
             Controls.Add(group_box_add_cards);
         }
 
-        private void creating_box_for_cards_to_edit(SqlDataReader reader)
+        private void creating_box_for_cards_to_edit(SqlDataReader reader, ref Decks flashcard, LinkedList<Decks> linkedlistdeck)
         {
-            edit_cards group_box_edit_cards = new edit_cards(reader.GetString(1), reader.GetString(2));
+            edit_cards group_box_edit_cards = new edit_cards(ref flashcard, linkedlistdeck);
             group_box_edit_cards.OnUpdateStatus += group_box_edit_cards_OnUpdateStatus;
-            group_box_edit_cards.set_tablename(deck_name);
             group_box_edit_cards.Location = new Point(group_box_card_controls.Location.X, group_box_card_controls.Location.Y);
             Controls.Add(group_box_edit_cards);
             move_card_controls_box();
@@ -240,7 +243,8 @@ namespace clone
         }
         private void group_box_add_cards_OnUpdateStatus(object sender, EventArgs e)
         {
-            
+            card_index_in_linkedlist = 1;
+            design_shown_cards(1);
         }
         private void group_box_edit_cards_OnUpdateStatus(object sender, EventArgs e)
         {
