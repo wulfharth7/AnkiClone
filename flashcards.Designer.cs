@@ -31,13 +31,13 @@ namespace clone
         {
             this.lblDeckname = new System.Windows.Forms.Label();
             this.card_box = new System.Windows.Forms.GroupBox();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.myPanel = new System.Windows.Forms.Panel();
             this.lblCards = new System.Windows.Forms.LinkLabel();
             this.lblCardCount = new System.Windows.Forms.Label();
             this.show_next_card = new System.Windows.Forms.LinkLabel();
             this.show_previous_card = new System.Windows.Forms.LinkLabel();
-            this.btn_study = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnTest = new System.Windows.Forms.Button();
+            this.btnStudy = new System.Windows.Forms.Button();
             this.lblBack = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -48,7 +48,7 @@ namespace clone
             this.group_box_card_controls = new System.Windows.Forms.GroupBox();
             this.btn_add_cards = new System.Windows.Forms.Button();
             this.card_box.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.myPanel.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.group_box_card_controls.SuspendLayout();
@@ -66,7 +66,7 @@ namespace clone
             // 
             // card_box
             // 
-            this.card_box.Controls.Add(this.panel1);
+            this.card_box.Controls.Add(this.myPanel);
             this.card_box.Controls.Add(this.lblCardCount);
             this.card_box.Controls.Add(this.show_next_card);
             this.card_box.Controls.Add(this.show_previous_card);
@@ -77,16 +77,16 @@ namespace clone
             this.card_box.TabStop = false;
             this.card_box.Text = "Cards";
             // 
-            // panel1
+            // myPanel
             // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.lblCards);
-            this.panel1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.panel1.Location = new System.Drawing.Point(13, 21);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(441, 225);
-            this.panel1.TabIndex = 10;
-            this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
+            this.myPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.myPanel.Controls.Add(this.lblCards);
+            this.myPanel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.myPanel.Location = new System.Drawing.Point(13, 21);
+            this.myPanel.Name = "myPanel";
+            this.myPanel.Size = new System.Drawing.Size(441, 225);
+            this.myPanel.TabIndex = 10;
+            this.myPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             // 
             // lblCards
             // 
@@ -145,25 +145,25 @@ namespace clone
             this.show_previous_card.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.show_previous_card.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.show_previous_card_LinkClicked);
             // 
-            // btn_study
+            // btnTest
             // 
-            this.btn_study.Location = new System.Drawing.Point(22, 21);
-            this.btn_study.Name = "btn_study";
-            this.btn_study.Size = new System.Drawing.Size(114, 34);
-            this.btn_study.TabIndex = 2;
-            this.btn_study.Text = "Flashcards";
-            this.btn_study.UseVisualStyleBackColor = true;
-            this.btn_study.Click += new System.EventHandler(this.btn_study_Click);
+            this.btnTest.Location = new System.Drawing.Point(22, 21);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(114, 34);
+            this.btnTest.TabIndex = 2;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btn_study_Click);
             // 
-            // button2
+            // btnStudy
             // 
-            this.button2.Location = new System.Drawing.Point(22, 61);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(114, 34);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Test";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnStudy.Location = new System.Drawing.Point(22, 61);
+            this.btnStudy.Name = "btnStudy";
+            this.btnStudy.Size = new System.Drawing.Size(114, 34);
+            this.btnStudy.TabIndex = 3;
+            this.btnStudy.Text = "Flashcards";
+            this.btnStudy.UseVisualStyleBackColor = true;
+            this.btnStudy.Click += new System.EventHandler(this.button2_Click);
             // 
             // lblBack
             // 
@@ -182,8 +182,8 @@ namespace clone
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.btn_study);
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.btnTest);
+            this.groupBox1.Controls.Add(this.btnStudy);
             this.groupBox1.Location = new System.Drawing.Point(19, 75);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(159, 153);
@@ -274,7 +274,7 @@ namespace clone
             this.Load += new System.EventHandler(this.flashcards_Load);
             this.card_box.ResumeLayout(false);
             this.card_box.PerformLayout();
-            this.panel1.ResumeLayout(false);
+            this.myPanel.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.group_box_card_controls.ResumeLayout(false);
@@ -287,8 +287,8 @@ namespace clone
 
         private System.Windows.Forms.Label lblDeckname;
         private System.Windows.Forms.GroupBox card_box;
-        private System.Windows.Forms.Button btn_study;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Button btnStudy;
         private System.Windows.Forms.LinkLabel lblBack;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -299,7 +299,7 @@ namespace clone
         private System.Windows.Forms.LinkLabel show_next_card;
         private System.Windows.Forms.LinkLabel show_previous_card;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel myPanel;
         private System.Windows.Forms.LinkLabel lblCards;
         private System.Windows.Forms.GroupBox group_box_card_controls;
         private System.Windows.Forms.Button btn_add_cards;

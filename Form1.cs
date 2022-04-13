@@ -20,6 +20,15 @@ namespace clone
         Stats stat_page = new Stats();
         private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
         SqlConnection myDatabase = new SqlConnection(connectionstring);
+        private int userID = 0;
+        public int get_UserID()
+        {
+            return userID;
+        }
+        public void set_UserID(int variable)
+        {
+            userID = variable;
+        }
         public Form1()
         {
             InitializeComponent();
@@ -29,15 +38,15 @@ namespace clone
         private void Form1_Load(object sender, EventArgs e)
         {
             panel1.Controls.Add(loginPage1);
-            panel1.Controls.Add(deck_page);
         }
 
         private void Decks_Button_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (loginPage1.Visible == false)
             {
+                this.set_UserID(loginPage1.get_UserID());
+                deck_page.set_UserID(this.get_UserID());
                 panel1.Controls.Clear();
-                //deck_page.Controls.Clear();
                 panel1.Controls.Add(deck_page);
                 deck_page.Show();
             }
@@ -72,8 +81,8 @@ namespace clone
         private void timer1_Tick(object sender, EventArgs e)
         {
             dateLabel.Text = "Date: " + DateTime.Now.ToString();
-            set_user_name_label();
-            check_for_user_login();
+            set_user_name_label();//get this out of here
+            check_for_user_login();//get this out of here, dont make them work with the timer
         }
         private void timer_settings() //a function to keep the timer running
         {
@@ -124,7 +133,7 @@ namespace clone
             string readingCommand = "SELECT * from  users ";
             SqlCommand readCommand = new SqlCommand(readingCommand, myDatabase); //why select * but not select username, whats foreach
             SqlDataReader reader = readCommand.ExecuteReader();
-
+            
             while (reader.Read())
             {
                 int id = reader.GetInt32(0);
@@ -134,14 +143,16 @@ namespace clone
                     {
                         lblUserName.Text = "  Logged user: " + reader.GetString(1);
                         deck_page.set_username(reader.GetString(1));
+                        deck_page.set_UserID(this.get_UserID());
                     }
                 }
             }
             if (deck_page.get_isLoggedOff() == true)
             {
-                lblUserName.Text = "  Logged user: -";
+                lblUserName.Text = "Logged user: -";    
             }
             myDatabase.Close();
+
         }
         private void check_for_user_login()
         {

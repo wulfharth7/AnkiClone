@@ -44,7 +44,8 @@ namespace clone
             }
             else
             {
-                if(check_if_first_card() == true)
+                
+                if (check_if_first_card() == true)
                 {
                     update_table();
                     temp_llist.AddLast(flashcard);
@@ -56,7 +57,7 @@ namespace clone
                     temp_llist.AddLast(flashcard);
                     UpdateStatus();
                 }
-                this.Dispose();
+                convert_to_edit_box();
             }
             
         }
@@ -146,6 +147,21 @@ namespace clone
             //Call any listeners
             OnUpdateStatus?.Invoke(this, args);
         }
-            
+        private void convert_to_edit_box()
+        {
+            edit_cards group_box_edit_cards = new edit_cards(ref flashcard,temp_llist);
+            group_box_edit_cards.Location = new Point(this.Location.X, this.Location.Y);
+            group_box_edit_cards.OnUpdateStatus += group_box_edit_cards_OnUpdateStatus;
+            this.Parent.Controls.Add(group_box_edit_cards);
+            group_box_edit_cards.Show();
+            group_box_edit_cards.BringToFront();
+            txtBox_term.Text = "";
+            txtBox_definition.Text = "";
+        }
+        private void group_box_edit_cards_OnUpdateStatus(object sender, EventArgs e)
+        {
+            UpdateStatus();
+        }
+
     }
 }

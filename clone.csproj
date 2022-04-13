@@ -63,6 +63,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -129,6 +130,12 @@
     <Compile Include="Stats.Designer.cs">
       <DependentUpon>Stats.cs</DependentUpon>
     </Compile>
+    <Compile Include="study_flashcards.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="study_flashcards.Designer.cs">
+      <DependentUpon>study_flashcards.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="add_edit_cards.resx">
       <DependentUpon>add_edit_cards.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,6 +168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Stats.resx">
       <DependentUpon>Stats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="study_flashcards.resx">
+      <DependentUpon>study_flashcards.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ankiDataSet.xsc">
       <DependentUpon>ankiDataSet.xsd</DependentUpon>

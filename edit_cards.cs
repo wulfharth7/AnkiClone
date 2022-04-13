@@ -49,7 +49,6 @@ namespace clone
 
         private void button6_Click(object sender, EventArgs e) //edit_button
         {
-            MessageBox.Show(temp.getFront_Face());
             string command = "Update " + temp.get_deckname() + " SET [Front_Face]= @new_face ,[Back_Face]= @new_back WHERE [Front_Face]= @prev_face and [Back_Face]= @prev_back";
             SqlCommand cmd = new SqlCommand(command,myDatabase);
             myDatabase.Open();

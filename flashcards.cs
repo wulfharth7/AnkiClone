@@ -17,6 +17,7 @@ namespace clone
         private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
         SqlConnection myDatabase = new SqlConnection(connectionstring);
         LinkedList<Decks> deck_linked_list = new LinkedList<Decks>();
+        
 
         private int deck_count = 0;
         public int card_index_in_linkedlist = 1;
@@ -42,14 +43,20 @@ namespace clone
             InitializeComponent();
         }
 
-        private void btn_study_Click(object sender, EventArgs e)
+        private void btn_study_Click(object sender, EventArgs e) //test button
         {
-
+            
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) //flashcard study button
         {
-
+            //when this code was under the btn_study_click event function, there was a bug happening about visibility of the controls hence i changed the code to another event function
+            foreach (Control c in this.Controls)
+            {
+                c.Visible = false;
+            }
+            study_flashcards study_Flashcards = new study_flashcards(deck_linked_list);
+            Controls.Add(study_Flashcards);
         }
 
         private void flashcards_Load(object sender, EventArgs e)
@@ -80,12 +87,12 @@ namespace clone
                     design_shown_cards(1);
                 }
             }
-            
+
             //cards do exist
             myDatabase.Close();
-            
+
         }
-        
+
         private void lblBack_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             foreach (Control c in this.Parent.Controls)
@@ -95,7 +102,7 @@ namespace clone
                     c.Visible = false;
                 }
                 else
-                {
+                {   
                     c.Visible = true;
                 }
             }
@@ -110,8 +117,7 @@ namespace clone
             this.AutoScroll = true;
         }
         private void get_cards_to_LinkedList(SqlDataReader reader, Decks flashcard)
-        {  
-            
+        {
             flashcard.set_deckname(this.get_deckname());
             flashcard.setFront_Face(reader.GetString(1));
             flashcard.setBack_Face(reader.GetString(2));
@@ -120,21 +126,19 @@ namespace clone
                 if (deck_linked_list.Count() == 0)
                 {
                     deck_linked_list.AddFirst(flashcard);
-                    creating_box_for_cards_to_edit(reader, ref flashcard,deck_linked_list);
+                    creating_box_for_cards_to_edit(reader, ref flashcard, deck_linked_list);
                 }
                 else
                 {
                     deck_linked_list.AddLast(flashcard);
-                    creating_box_for_cards_to_edit(reader,  ref flashcard, deck_linked_list);
+                    creating_box_for_cards_to_edit(reader, ref flashcard, deck_linked_list);
                 }
-                
             }
-            
         }
         private void design_shown_cards()
         {
             card_index_in_linkedlist--;
-            lblCardCount.Text = Convert.ToString(card_index_in_linkedlist) +"/"+deck_linked_list.Count();
+            lblCardCount.Text = Convert.ToString(card_index_in_linkedlist) + "/" + deck_linked_list.Count();
             lblCards.Text = "You haven't added cards...yet!";
         }
         private void design_shown_cards(int cards_do_exist)
@@ -154,9 +158,9 @@ namespace clone
         }
         private void show_other_face_of_card()
         {
-            foreach(var item in deck_linked_list)
+            foreach (var item in deck_linked_list)
             {
-                if(lblCards.Text == item.getBack_Face())
+                if (lblCards.Text == item.getBack_Face())
                 {
                     lblCards.Text = item.getFront_Face();
                     break;
@@ -175,43 +179,43 @@ namespace clone
             {
                 card_index_in_linkedlist++;
                 lblCardCount.Text = Convert.ToString(card_index_in_linkedlist) + "/" + deck_linked_list.Count();
-            
-            if (lblCards.Text != deck_linked_list.First.Value.getFront_Face() || lblCards.Text != deck_linked_list.First.Value.getBack_Face())
-            {
-                string smth = "uninitialized_string";
-                foreach (var item in deck_linked_list)
+
+                if (lblCards.Text != deck_linked_list.First.Value.getFront_Face() || lblCards.Text != deck_linked_list.First.Value.getBack_Face())
                 {
-                    if (lblCards.Text == deck_linked_list.Find(item).Value.getFront_Face() || lblCards.Text == deck_linked_list.Find(item).Value.getBack_Face())
+                    string smth = "uninitialized_string";
+                    foreach (var item in deck_linked_list)
                     {
-                        var stmh = deck_linked_list.Find(item).Next.Value.getFront_Face();
-                        smth = stmh;
+                        if (lblCards.Text == deck_linked_list.Find(item).Value.getFront_Face() || lblCards.Text == deck_linked_list.Find(item).Value.getBack_Face())
+                        {
+                            var stmh = deck_linked_list.Find(item).Next.Value.getFront_Face();
+                            smth = stmh;
+                        }
                     }
+                    lblCards.Text = smth;//try this with a break clause
                 }
-                lblCards.Text = smth;//try this with a break clause
-            }
             }
         }
 
         private void show_previous_card_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if(card_index_in_linkedlist != 1 && card_index_in_linkedlist != 0)
+            if (card_index_in_linkedlist != 1 && card_index_in_linkedlist != 0)
             {
                 card_index_in_linkedlist--;
                 lblCardCount.Text = Convert.ToString(card_index_in_linkedlist) + "/" + deck_linked_list.Count();
-            
-            if (lblCards.Text != deck_linked_list.First.Value.getFront_Face() || lblCards.Text != deck_linked_list.First.Value.getBack_Face())
-            {
-                string smth = "uninitialized_string";
-                foreach (var item in deck_linked_list)
+
+                if (lblCards.Text != deck_linked_list.First.Value.getFront_Face() || lblCards.Text != deck_linked_list.First.Value.getBack_Face())
                 {
-                    if (lblCards.Text == deck_linked_list.Find(item).Value.getFront_Face() || lblCards.Text == deck_linked_list.Find(item).Value.getBack_Face())
+                    string smth = "uninitialized_string";
+                    foreach (var item in deck_linked_list)
                     {
-                        var stmh = deck_linked_list.Find(item).Previous.Value.getFront_Face();
-                        smth = stmh;
+                        if (lblCards.Text == deck_linked_list.Find(item).Value.getFront_Face() || lblCards.Text == deck_linked_list.Find(item).Value.getBack_Face())
+                        {
+                            var stmh = deck_linked_list.Find(item).Previous.Value.getFront_Face();
+                            smth = stmh;
+                        }
                     }
+                    lblCards.Text = smth;
                 }
-                lblCards.Text = smth;
-            }
             }
         }
 
@@ -251,7 +255,40 @@ namespace clone
             card_index_in_linkedlist = 1;
             design_shown_cards(1);
         }
-        
-       
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (myPanel.Visible == true)
+            {
+                if (keyData == Keys.Right)
+                {
+                    ((IButtonControl)show_next_card).PerformClick();
+                    return true;
+                }
+                else if (keyData == Keys.Left)
+                {
+                    ((IButtonControl)show_previous_card).PerformClick();
+                    return true;
+                }
+                else if (keyData == Keys.Up)
+                {
+                    show_other_face_of_card();
+                    return true;
+                }
+                else if (keyData == Keys.Down)
+                {
+                    show_other_face_of_card();
+                    return true;
+                }
+                else
+                {
+                    return base.ProcessCmdKey(ref msg, keyData);
+                }
+            }
+            else
+            {
+                return base.ProcessCmdKey(ref msg, keyData);
+            }
+        }
     }
 }

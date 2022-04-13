@@ -15,9 +15,11 @@ namespace clone
     {
         private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
         SqlConnection myDatabase = new SqlConnection(connectionstring);
-        public input_box_form()
+        public int idUser; // make it private
+        public input_box_form(int userID)
         {
             InitializeComponent();
+            idUser = userID;
         }
 
         private void button2_Click(object sender, EventArgs e)//cancel button
@@ -43,12 +45,13 @@ namespace clone
             {
                 try
                 {
-                    SqlCommand myCommand = new SqlCommand("create table "+ boxInput.Text +" (UserID int NOT NULL    IDENTITY    PRIMARY KEY,[Front_Face] varchar(50),[Back_Face] varchar(50),[FRONT_LANG] varchar(50),[BACK_LANG] varchar(50))");
+                    SqlCommand myCommand = new SqlCommand("create table "+ boxInput.Text +" (UserID int,[Front_Face] nvarchar(50),[Back_Face] nvarchar(50),[FRONT_LANG] nvarchar(50),[BACK_LANG] nvarchar(50))");
                     myCommand.Connection = myDatabase;
                     myCommand.ExecuteNonQuery();
                     string space = "";
-                    myCommand.CommandText = "INSERT INTO " + boxInput.Text + " ([Front_Face], [Back_Face], [FRONT_LANG], [BACK_LANG]) VALUES (@2,@3,@4,@5)";
+                    myCommand.CommandText = "INSERT INTO " + boxInput.Text + " ([UserID],[Front_Face], [Back_Face], [FRONT_LANG], [BACK_LANG]) VALUES (@1,@2,@3,@4,@5)";
                     myCommand.Parameters.Clear();
+                    myCommand.Parameters.AddWithValue("@1", idUser);
                     myCommand.Parameters.AddWithValue("@2", space);
                     myCommand.Parameters.AddWithValue("@3", space);
                     myCommand.Parameters.AddWithValue("@4", space);

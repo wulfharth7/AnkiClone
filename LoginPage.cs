@@ -11,8 +11,6 @@ using System.Data.SqlClient;
 
 namespace clone
 {
-
-
     public partial class LoginPage : UserControl
     {
         private int userID = 0;
@@ -32,16 +30,11 @@ namespace clone
         public LoginPage()
         {
             InitializeComponent();
-
         }
-
         private void UserControl1_Load(object sender, EventArgs e)
         {
             box_pass.PasswordChar = '*'; //hides pass
-
-
         }
-
         private void show_pass_panel_CheckedChanged(object sender, EventArgs e)
         {
             if (show_pass_panel.Checked == true)
@@ -53,7 +46,6 @@ namespace clone
                 box_pass.PasswordChar = '*'; //hides pass
             }
         } //checkbox for showing password
-
         private void button2_Click(object sender, EventArgs e) //button for login
         {
             myDatabase.Open();
@@ -71,7 +63,7 @@ namespace clone
                         error_message_username.Text = "";
                         this.set_UserID(id);
                         this.Hide();
-                        clean_boxes();
+                        clean_boxes();      
                     }
                     else
                     {
@@ -85,6 +77,7 @@ namespace clone
 
             }
             myDatabase.Close();
+
         }
         private void btnRegister_Click(object sender, EventArgs e) //button for register
         {
@@ -108,8 +101,8 @@ namespace clone
                             {
                                 update_register();
                             }
-                            else
-                            {
+                            else 
+                            {  
                                 bool already_exists_user = check_if_user_exists_already(box_username.Text);
                                 if (already_exists_user == true)
                                 {
@@ -180,8 +173,6 @@ namespace clone
         private bool check_if_user_exists_already(string name)
         {
             myCMD.Parameters.Clear();
-
-
             //SELECT COUNT(*) from users where user_name like @username
             string reader_command = "SELECT COUNT(*) from [users] where [username]=@name";
             SqlCommand readCommand = new SqlCommand(reader_command, myDatabase);
