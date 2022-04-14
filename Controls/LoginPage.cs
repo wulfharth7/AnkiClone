@@ -50,7 +50,7 @@ namespace clone
         private void button2_Click(object sender, EventArgs e) //button for login
         {
             myDatabase.Open();
-            SqlCommand readCommand = new SqlCommand("SELECT * from  users ", myDatabase); 
+            SqlCommand readCommand = new SqlCommand("SELECT * from  users ", myDatabase); //change it from * to username/password
             reader = readCommand.ExecuteReader();
             while (reader.Read())
             {

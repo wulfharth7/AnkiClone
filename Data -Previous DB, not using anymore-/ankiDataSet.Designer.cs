@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace clone {
+namespace clone.Data__Previous_DB__not_using_anymore_ {
     
     
     /// <summary>
