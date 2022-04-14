@@ -99,25 +99,27 @@ namespace clone
             Deck_Owner.set_nickname(username);
             set_deck_names(myDatabase);
         }
-        private void set_deck_names(SqlConnection myDatabase)
+        private async Task set_deck_names(SqlConnection myDatabase)
         {
             myDatabase.Open();
-            /*var selectNames = get_table_names(myDatabase);*/ //freeze here
-            DataTable table = myDatabase.GetSchema("Tables");
-            DataRow[] rows = table.Select();
-            foreach (var item in rows) //this foreach makes it freeze
+            lblNoDeck.Text = "                                      Loading...Please wait...";
+            await Task.Run(() =>
             {
-                if (check_for_user_id(Convert.ToString(item["TABLE_NAME"])) == Convert.ToString(this.get_UserID()))
+                var selectNames = get_table_names(myDatabase); //freeze here
+                foreach (DataRow item in selectNames.Rows) //this foreach makes it freeze
                 {
-                    if (Deck_Owner.users_decks.Contains(Convert.ToString(item["TABLE_NAME"])) == false)
+                    if (check_for_user_id(Convert.ToString(item["TABLE_NAME"])) == Convert.ToString(this.get_UserID()))
                     {
-                        if (Convert.ToString(item["TABLE_NAME"]) != "users")
+                        if (Deck_Owner.users_decks.Contains(Convert.ToString(item["TABLE_NAME"])) == false)
                         {
-                            Deck_Owner.users_decks.Add((Convert.ToString(item["TABLE_NAME"])));
+                            if (Convert.ToString(item["TABLE_NAME"]) != "users")
+                            {
+                                Deck_Owner.users_decks.Add((Convert.ToString(item["TABLE_NAME"])));
+                            }
                         }
                     }
                 }
-            }
+            });
             if (Deck_Owner.users_decks.Count() == 0)
             {
                 lblNoDeck.Text = "              You haven't created decks yet! Create some to start.";
@@ -183,11 +185,10 @@ namespace clone
             lblCount.Show();
             lblCount.BringToFront();
         }
-        private DataRow[] get_table_names(SqlConnection myDatabase)
+        private DataTable get_table_names(SqlConnection myDatabase)
         {
             DataTable table = myDatabase.GetSchema("Tables");
-            DataRow[] rows = table.Select();
-            return rows;
+            return table;
         }
         private void get_list_of_created_table_labels()
         {
