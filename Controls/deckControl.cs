@@ -103,20 +103,20 @@ namespace clone
         private void set_deck_names(SqlConnection myDatabase, SqlCommand mycmd)
         {
             myDatabase.Open();
-            //var selectNames = get_table_names(myDatabase); //checkid
-            //foreach (var item in selectNames)
-            //{
-            //    if (check_for_user_id(Convert.ToString(item["TABLE_NAME"])) == Convert.ToString(this.get_UserID()))
-            //    {
-            //        if (Deck_Owner.users_decks.Contains(Convert.ToString(item["TABLE_NAME"])) == false)
-            //        {
-            //            if (Convert.ToString(item["TABLE_NAME"]) != "users")
-            //            {
-            //                Deck_Owner.users_decks.Add((Convert.ToString(item["TABLE_NAME"])));
-            //            }
-            //        }
-            //    }
-            //}
+            var selectNames = get_table_names(myDatabase); //checkid
+            foreach (var item in selectNames)
+            {
+                if (check_for_user_id(Convert.ToString(item["TABLE_NAME"])) == Convert.ToString(this.get_UserID()))
+                {
+                    if (Deck_Owner.users_decks.Contains(Convert.ToString(item["TABLE_NAME"])) == false)
+                    {
+                        if (Convert.ToString(item["TABLE_NAME"]) != "users")
+                        {
+                            Deck_Owner.users_decks.Add((Convert.ToString(item["TABLE_NAME"])));
+                        }
+                    }
+                }
+            }
             if(Deck_Owner.users_decks.Count() == 0)
             {
                 lblNoDeck.Text = "              You haven't created decks yet! Create some to start.";

@@ -76,7 +76,6 @@ namespace clone
                 {
                     error_message_username.Text = "Invalid username.";
                 }
-
             }
             myDatabase.Close();
 

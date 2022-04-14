@@ -75,83 +75,72 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="add_edit_cards.cs">
+    <Compile Include="Controls\add_edit_cards.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="add_edit_cards.Designer.cs">
+    <Compile Include="Controls\add_edit_cards.Designer.cs">
       <DependentUpon>add_edit_cards.cs</DependentUpon>
     </Compile>
-    <Compile Include="ankiDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ankiDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="deckControl.cs">
+    <Compile Include="Controls\deckControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="deckControl.Designer.cs">
+    <Compile Include="Controls\deckControl.Designer.cs">
       <DependentUpon>deckControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="edit_cards.cs">
+    <Compile Include="Controls\edit_cards.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="edit_cards.Designer.cs">
+    <Compile Include="Controls\edit_cards.Designer.cs">
       <DependentUpon>edit_cards.cs</DependentUpon>
     </Compile>
-    <Compile Include="flashcards.cs">
+    <Compile Include="Controls\flashcards.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="flashcards.Designer.cs">
+    <Compile Include="Controls\flashcards.Designer.cs">
       <DependentUpon>flashcards.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="Controls\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="Controls\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="input_box_form.cs">
+    <Compile Include="Controls\input_box_form.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="input_box_form.Designer.cs">
+    <Compile Include="Controls\input_box_form.Designer.cs">
       <DependentUpon>input_box_form.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LoginPage.cs">
+    <Compile Include="Controls\LoginPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LoginPage.Designer.cs">
+    <Compile Include="Controls\LoginPage.Designer.cs">
       <DependentUpon>LoginPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Stats.cs">
+    <Compile Include="Controls\study_flashcards.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Stats.Designer.cs">
-      <DependentUpon>Stats.cs</DependentUpon>
-    </Compile>
-    <Compile Include="study_flashcards.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="study_flashcards.Designer.cs">
+    <Compile Include="Controls\study_flashcards.Designer.cs">
       <DependentUpon>study_flashcards.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="add_edit_cards.resx">
+    <EmbeddedResource Include="Controls\add_edit_cards.resx">
       <DependentUpon>add_edit_cards.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="deckControl.resx">
+    <EmbeddedResource Include="Controls\deckControl.resx">
       <DependentUpon>deckControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="edit_cards.resx">
+    <EmbeddedResource Include="Controls\edit_cards.resx">
       <DependentUpon>edit_cards.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="flashcards.resx">
+    <EmbeddedResource Include="Controls\flashcards.resx">
       <DependentUpon>flashcards.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="Controls\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="input_box_form.resx">
+    <EmbeddedResource Include="Controls\input_box_form.resx">
       <DependentUpon>input_box_form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -163,26 +152,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="LoginPage.resx">
+    <EmbeddedResource Include="Controls\LoginPage.resx">
       <DependentUpon>LoginPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Stats.resx">
-      <DependentUpon>Stats.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="study_flashcards.resx">
+    <EmbeddedResource Include="Controls\study_flashcards.resx">
       <DependentUpon>study_flashcards.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="ankiDataSet.xsc">
-      <DependentUpon>ankiDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="ankiDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ankiDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="ankiDataSet.xss">
-      <DependentUpon>ankiDataSet.xsd</DependentUpon>
-    </None>
     <None Include="clone_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -196,11 +171,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="anki.accdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

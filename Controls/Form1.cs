@@ -17,7 +17,6 @@ namespace clone
     {
         deckControl deck_page = new deckControl();
         LoginPage loginPage1;
-        Stats stat_page = new Stats();
         private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
         SqlConnection myDatabase = new SqlConnection(connectionstring);
         private int userID = 0;
@@ -76,16 +75,17 @@ namespace clone
             if (loginPage1.Visible == false)
             {
                 panel1.Controls.Clear();
-                panel1.Controls.Add(stat_page);
-                stat_page.Show();
+                //panel1.Controls.Add(stat_page);
+                //stat_page.Show();
             }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             dateLabel.Text = "Date: " + DateTime.Now.ToString();
-            set_user_name_label();//get this out of here
-            check_for_user_login();//get this out of here, dont make them work with the timer
+            //set_user_name_label();
+            //check_for_user_login();
+            
         }
         private void timer_settings() //a function to keep the timer running
         {
