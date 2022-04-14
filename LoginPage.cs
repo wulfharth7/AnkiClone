@@ -26,10 +26,11 @@ namespace clone
         SqlConnection myDatabase = new SqlConnection(connectionstring);
         SqlCommand myCMD = new SqlCommand();
         SqlDataReader reader;
-
-        public LoginPage()
+        LinkLabel button_deck;
+        public LoginPage(LinkLabel decksbutton)
         {
             InitializeComponent();
+            button_deck = decksbutton;
         }
         private void UserControl1_Load(object sender, EventArgs e)
         {
@@ -49,7 +50,7 @@ namespace clone
         private void button2_Click(object sender, EventArgs e) //button for login
         {
             myDatabase.Open();
-            SqlCommand readCommand = new SqlCommand("SELECT * from  users ", myDatabase); //why select * but not select username, whats foreach
+            SqlCommand readCommand = new SqlCommand("SELECT * from  users ", myDatabase); 
             reader = readCommand.ExecuteReader();
             while (reader.Read())
             {
@@ -63,7 +64,8 @@ namespace clone
                         error_message_username.Text = "";
                         this.set_UserID(id);
                         this.Hide();
-                        clean_boxes();      
+                        clean_boxes();
+                        ((IButtonControl)button_deck).PerformClick();
                     }
                     else
                     {
@@ -168,7 +170,6 @@ namespace clone
             {
                 return true;
             }
-
         }
         private bool check_if_user_exists_already(string name)
         {
@@ -186,10 +187,6 @@ namespace clone
             {
                 return false;
             }
-
-
-
-
         }
         private void clean_boxes()
         {
@@ -225,10 +222,3 @@ namespace clone
         }
     }
 }
-
-
-
-
-
-
-

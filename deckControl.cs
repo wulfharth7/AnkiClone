@@ -56,10 +56,7 @@ namespace clone
 
         private void deckControl_Load(object sender, EventArgs e)
         {
-            Deck_Owner.set_nickname(username);
             set_user_variables();
-            create_Dynamic_label_Texts();
-            
         }
 
         private void btnCreateDeck_Click(object sender, EventArgs e)
@@ -70,6 +67,7 @@ namespace clone
         }
         private void btnLogout_Click(object sender, EventArgs e)
         {
+            this.Hide();
             List<Control> to_beDisposed = new List<Control>();
             foreach (Control c in this.Controls)
             {
@@ -95,10 +93,10 @@ namespace clone
             lblNoDeck.Location = new Point(114, 35);
             table_list.Clear();
             //this.Hide();
-
         }
         private void set_user_variables()
         {
+            Deck_Owner.set_nickname(username);
             SqlCommand cmd = myDatabase.CreateCommand();
             set_deck_names(myDatabase, cmd);
         }
@@ -114,7 +112,6 @@ namespace clone
                     {
                         if (Convert.ToString(item["TABLE_NAME"]) != "users")
                         {
-
                             Deck_Owner.users_decks.Add((Convert.ToString(item["TABLE_NAME"])));
                         }
                     }
@@ -123,17 +120,21 @@ namespace clone
             if(Deck_Owner.users_decks.Count() == 0)
             {
                 lblNoDeck.Text = "              You haven't created decks yet! Create some to start.";
+                myDatabase.Close();
             }
-            myDatabase.Close();
+            else
+            {
+                myDatabase.Close();
+                create_Dynamic_label_Texts();
+            }
+            
         }
         private void btnRefreshDecks_Click(object sender, EventArgs e)
         {  
             set_user_variables();
-            create_Dynamic_label_Texts();
         }
         private void create_Dynamic_label_Texts()
-        {//you keep creating same labels, be careful and tidy this place up!
-
+        {
             int x = 130;
             int y = 35;
             foreach (var deck in Deck_Owner.users_decks)
@@ -149,12 +150,11 @@ namespace clone
                     deck_1.LinkColor = Color.Black;
                     deck_1.Location = new Point(x, y);
                     deck_1.Size = new Size(270, 20);
-                    flashcards flashcard = new flashcards();
-                    flashcard.set_deckname(deck_1.Text);
                     deck_1.LinkClicked += (s, e) =>
                     {
+                        flashcards flashcard = new flashcards();
+                        flashcard.set_deckname(deck_1.Text);
                         Controls.Add(flashcard);
-                        flashcard.Hide();
                         foreach (Control c in this.Controls)
                         {
                             c.Visible = false;
@@ -162,22 +162,13 @@ namespace clone
                         flashcard.Show();
                     };
                     Controls.Add(deck_1);
-                    deck_1.Show();
+                    table_list.Clear();
                     get_list_of_created_table_labels();
                     y = y + 24;
-                    if(Deck_Owner.users_decks.Count != 0)
-                        lblNoDeck.Text = "Click deck names to start flashcard modes or to edit/add cards!";
-                    else
-                        lblNoDeck.Text = "         You haven't created decks yet! Create some to start.";
-                    lblNoDeck.Location = new Point(x - 15, y + 5);
-                    card_count_from_deck(y, deck);
-                    delete_deck_label_add(y, deck);
+                    additional_settings_for_dynamic_deck_texts(x, y, deck);
                 }
             }
         }
-
-
-
         private void card_count_from_deck(int y_position, string table)
         {
             //open the database and count the cards
@@ -278,8 +269,17 @@ namespace clone
                 {
 
                 }
-
             };
+        }
+        private void additional_settings_for_dynamic_deck_texts(int x, int y, string deck)
+        {
+            if (Deck_Owner.users_decks.Count != 0)
+                lblNoDeck.Text = "Click deck names to start flashcard modes or to edit/add cards!";
+            else
+                lblNoDeck.Text = "         You haven't created decks yet! Create some to start.";
+            lblNoDeck.Location = new Point(x - 15, y + 5);
+            card_count_from_deck(y, deck);
+            delete_deck_label_add(y, deck);
         }
         
     }

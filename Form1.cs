@@ -16,11 +16,12 @@ namespace clone
     public partial class Form1 : Form
     {
         deckControl deck_page = new deckControl();
-        LoginPage loginPage1 = new LoginPage();
+        LoginPage loginPage1;
         Stats stat_page = new Stats();
         private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
         SqlConnection myDatabase = new SqlConnection(connectionstring);
         private int userID = 0;
+
         public int get_UserID()
         {
             return userID;
@@ -34,6 +35,8 @@ namespace clone
             InitializeComponent();
             timer_settings();
             user_database_settings();
+            LoginPage login_page = new LoginPage(Decks_Button);
+            loginPage1 = login_page;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -124,14 +127,14 @@ namespace clone
             }
             catch
             {
-                //create .accdb
+ 
             }
         } //creates a table if doesn't exist at the beginning of the program for users.
         private void set_user_name_label()
         {
             myDatabase.Open();
             string readingCommand = "SELECT * from  users ";
-            SqlCommand readCommand = new SqlCommand(readingCommand, myDatabase); //why select * but not select username, whats foreach
+            SqlCommand readCommand = new SqlCommand(readingCommand, myDatabase); //why select * but not select username
             SqlDataReader reader = readCommand.ExecuteReader();
             
             while (reader.Read())
