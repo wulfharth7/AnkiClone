@@ -83,9 +83,9 @@ namespace clone
         private void timer1_Tick(object sender, EventArgs e)
         {
             dateLabel.Text = "Date: " + DateTime.Now.ToString();
-            //set_user_name_label();
-            //check_for_user_login();
-            
+            set_user_name_label();
+            check_for_user_login();//delete these from the timer
+
         }
         private void timer_settings() //a function to keep the timer running
         {

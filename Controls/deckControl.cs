@@ -97,14 +97,15 @@ namespace clone
         private void set_user_variables()
         {
             Deck_Owner.set_nickname(username);
-            SqlCommand cmd = myDatabase.CreateCommand();
-            set_deck_names(myDatabase, cmd);
+            set_deck_names(myDatabase);
         }
-        private void set_deck_names(SqlConnection myDatabase, SqlCommand mycmd)
+        private void set_deck_names(SqlConnection myDatabase)
         {
             myDatabase.Open();
-            var selectNames = get_table_names(myDatabase); //checkid
-            foreach (var item in selectNames)
+            /*var selectNames = get_table_names(myDatabase);*/ //freeze here
+            DataTable table = myDatabase.GetSchema("Tables");
+            DataRow[] rows = table.Select();
+            foreach (var item in rows) //this foreach makes it freeze
             {
                 if (check_for_user_id(Convert.ToString(item["TABLE_NAME"])) == Convert.ToString(this.get_UserID()))
                 {
@@ -117,7 +118,7 @@ namespace clone
                     }
                 }
             }
-            if(Deck_Owner.users_decks.Count() == 0)
+            if (Deck_Owner.users_decks.Count() == 0)
             {
                 lblNoDeck.Text = "              You haven't created decks yet! Create some to start.";
                 myDatabase.Close();
@@ -182,7 +183,6 @@ namespace clone
             lblCount.Show();
             lblCount.BringToFront();
         }
-
         private DataRow[] get_table_names(SqlConnection myDatabase)
         {
             DataTable table = myDatabase.GetSchema("Tables");
