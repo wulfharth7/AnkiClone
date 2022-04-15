@@ -323,11 +323,11 @@ namespace clone
             SqlCommand readCommand = new SqlCommand(readingCommand, myDatabase); //why select * but not select username
             SqlDataReader reader = readCommand.ExecuteReader();
             StreamWriter outputFile = new StreamWriter(path,append: true);
-            
             while (reader.Read())
             {
                 outputFile.WriteLine(reader.GetString(1)+"\t\t"+reader.GetString(2));
             }
+
             outputFile.Close();
             myDatabase.Close();
         }
