@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-
+using System.IO;
 
 namespace clone
 {
@@ -17,7 +17,7 @@ namespace clone
         private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
         SqlConnection myDatabase = new SqlConnection(connectionstring);
         LinkedList<Decks> deck_linked_list = new LinkedList<Decks>();
-        
+        public string path = "uninited_path"; //make it private
 
         private int deck_count = 0;
         public int card_index_in_linkedlist = 1;
@@ -289,6 +289,47 @@ namespace clone
             {
                 return base.ProcessCmdKey(ref msg, keyData);
             }
+        }
+
+        private void btnExprtFile_Click(object sender, EventArgs e)
+        {
+            check_textfile_for_deck();
+            write_decks_into_text_file();
+        }
+        private void check_textfile_for_deck()
+        {
+            // This will get the current WORKING directory (i.e. \bin\Debug)
+            string workingDirectory = Environment.CurrentDirectory;
+            // or: Directory.GetCurrentDirectory() gives the same result
+
+            // gets to the project folder
+            string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName + "\\" + lblDeckname.Text.TrimStart() + ".txt";
+            path = projectDirectory;
+
+            if (!File.Exists(path))
+            {
+                StreamWriter sw = File.CreateText(path); //creates the text file
+                sw.Close();
+            }
+            else
+            {
+                File.Create(path).Close(); //clears the text file
+            }
+        }
+        private void write_decks_into_text_file()
+        {
+            myDatabase.Open();
+            string readingCommand = "SELECT * FROM " + this.get_deckname() + "";
+            SqlCommand readCommand = new SqlCommand(readingCommand, myDatabase); //why select * but not select username
+            SqlDataReader reader = readCommand.ExecuteReader();
+            StreamWriter outputFile = new StreamWriter(path,append: true);
+            
+            while (reader.Read())
+            {
+                outputFile.WriteLine(reader.GetString(1)+"\t\t"+reader.GetString(2));
+            }
+            outputFile.Close();
+            myDatabase.Close();
         }
     }
 }

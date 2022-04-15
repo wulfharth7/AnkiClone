@@ -99,14 +99,14 @@ namespace clone
             Deck_Owner.set_nickname(username);
             set_deck_names(myDatabase);
         }
-        private async Task set_deck_names(SqlConnection myDatabase)
+        private async void set_deck_names(SqlConnection myDatabase)
         {
             myDatabase.Open();
             lblNoDeck.Text = "                                      Loading...Please wait...";
             await Task.Run(() =>
             {
-                var selectNames = get_table_names(myDatabase); //freeze here
-                foreach (DataRow item in selectNames.Rows) //this foreach makes it freeze
+                var selectNames = get_table_names(myDatabase);  //freeze here -used to at least, async here now :D-
+                foreach (DataRow item in selectNames.Rows)     //this foreach makes it freeze -used to at least, async here now :D-
                 {
                     if (check_for_user_id(Convert.ToString(item["TABLE_NAME"])) == Convert.ToString(this.get_UserID()))
                     {

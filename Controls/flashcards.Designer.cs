@@ -218,7 +218,7 @@ namespace clone
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(114, 31);
             this.button4.TabIndex = 9;
-            this.button4.Text = "Inport Cards";
+            this.button4.Text = "smth to do later";
             this.button4.UseVisualStyleBackColor = true;
             // 
             // button3
@@ -238,6 +238,7 @@ namespace clone
             this.btnExprtFile.TabIndex = 7;
             this.btnExprtFile.Text = "Export Cards";
             this.btnExprtFile.UseVisualStyleBackColor = true;
+            this.btnExprtFile.Click += new System.EventHandler(this.btnExprtFile_Click);
             // 
             // group_box_card_controls
             // 
