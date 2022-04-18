@@ -84,7 +84,7 @@ namespace clone
                 progressBar.Minimum = 0;
                 progressBar.Step = 1;
             }
-            //add a snap of code here to make it full, if the deck is empty.
+            //add a snap of code here to make it full, if the deck is empty.also implement the change of code
         }
         private void lblCards_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
