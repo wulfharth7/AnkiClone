@@ -63,11 +63,14 @@ namespace clone
         private void btnAgain_Click(object sender, EventArgs e)
         {
             button_great_or_again_click("again");
+            progressBar.PerformStep();
         }
 
         private void btnGreat_Click(object sender, EventArgs e)
         {
             button_great_or_again_click();
+            progressBar.PerformStep();
+            
         }
         private void set_label_infos(LinkedList<Decks> decklinkedlist)
         {
@@ -77,7 +80,11 @@ namespace clone
                 lblCardRepeat.Text = "Repeat: " + Convert.ToString(card_repeat);
                 lblCardProgress.Text = Convert.ToString(card_index) + "/" + Convert.ToString(decklinkedlist.Count());
                 lblCardOutOf.Text = "Card: " + Convert.ToString(card_index) + " out of " + Convert.ToString(decklinkedlist.Count());
+                progressBar.Maximum = decklinkedlist.Count();
+                progressBar.Minimum = 0;
+                progressBar.Step = 1;
             }
+            //add a snap of code here to make it full, if the deck is empty.
         }
         private void lblCards_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -190,7 +197,7 @@ namespace clone
             btnStudyAgain.Hide();
             btnAgain.Show();
             btnGreat.Show();
-
+            progressBar.Value = 0;
             card_index = 1;
             linkedlistdeck.Clear();
             foreach (var item in decks_to_be_shown_again)
@@ -241,6 +248,7 @@ namespace clone
 
         private void btnReset_Click(object sender, EventArgs e)
         {
+            progressBar.Value = 0;
             card_index = 1;
             card_correct = 0;
             card_repeat = 0;
@@ -273,6 +281,12 @@ namespace clone
                 return base.ProcessCmdKey(ref msg, keyData);
             }
 
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            //will modify this one later
         }
     }
 }

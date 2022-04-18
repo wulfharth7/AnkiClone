@@ -319,17 +319,26 @@ namespace clone
         private void write_decks_into_text_file()
         {
             myDatabase.Open();
-            string readingCommand = "SELECT * FROM " + this.get_deckname() + "";
-            SqlCommand readCommand = new SqlCommand(readingCommand, myDatabase); //why select * but not select username
-            SqlDataReader reader = readCommand.ExecuteReader();
-            StreamWriter outputFile = new StreamWriter(path,append: true);
-            while (reader.Read())
+            try
             {
-                outputFile.WriteLine(reader.GetString(1)+"\t\t"+reader.GetString(2));
+                string readingCommand = "SELECT * FROM " + this.get_deckname() + "";
+                SqlCommand readCommand = new SqlCommand(readingCommand, myDatabase); //why select * but not select username
+                SqlDataReader reader = readCommand.ExecuteReader();
+                StreamWriter outputFile = new StreamWriter(path, append: true);
+                while (reader.Read())
+                {
+                    outputFile.WriteLine(reader.GetString(1) + "\t\t" + reader.GetString(2));
+                }
+                MessageBox.Show("Deck cards exported successfully to the local project file!");
+                outputFile.Close();
             }
-
-            outputFile.Close();
+            catch
+            {
+                MessageBox.Show("some error whatever" +
+                    " i'll improve this place later");
+            }
             myDatabase.Close();
         }
     }
 }
+//ther is this bug\ you cant move in the text box with that overridden function

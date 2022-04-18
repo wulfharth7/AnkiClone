@@ -35,7 +35,7 @@ namespace clone
             this.lblBack = new System.Windows.Forms.LinkLabel();
             this.lblDeckname = new System.Windows.Forms.Label();
             this.btnShuffle = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.lblCardProgress = new System.Windows.Forms.Label();
@@ -45,6 +45,7 @@ namespace clone
             this.btnAgain = new System.Windows.Forms.Button();
             this.btnGreat = new System.Windows.Forms.Button();
             this.btnStudyAgain = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.card_box.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -126,12 +127,13 @@ namespace clone
             this.btnShuffle.UseVisualStyleBackColor = true;
             this.btnShuffle.Click += new System.EventHandler(this.btnShuffle_Click);
             // 
-            // progressBar1
+            // progressBar
             // 
-            this.progressBar1.Location = new System.Drawing.Point(8, 91);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(154, 23);
-            this.progressBar1.TabIndex = 8;
+            this.progressBar.Location = new System.Drawing.Point(8, 91);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(154, 23);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar.TabIndex = 8;
             // 
             // label1
             // 
@@ -154,9 +156,9 @@ namespace clone
             // 
             // lblCardProgress
             // 
-            this.lblCardProgress.Location = new System.Drawing.Point(135, 117);
+            this.lblCardProgress.Location = new System.Drawing.Point(120, 117);
             this.lblCardProgress.Name = "lblCardProgress";
-            this.lblCardProgress.Size = new System.Drawing.Size(36, 24);
+            this.lblCardProgress.Size = new System.Drawing.Size(55, 24);
             this.lblCardProgress.TabIndex = 11;
             this.lblCardProgress.Text = "0/0";
             this.lblCardProgress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -218,6 +220,10 @@ namespace clone
             this.btnStudyAgain.UseVisualStyleBackColor = true;
             this.btnStudyAgain.Click += new System.EventHandler(this.btnStudyAgain_Click);
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
             // study_flashcards
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -231,7 +237,7 @@ namespace clone
             this.Controls.Add(this.lblCardProgress);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.btnShuffle);
             this.Controls.Add(this.lblDeckname);
             this.Controls.Add(this.lblBack);
@@ -253,7 +259,7 @@ namespace clone
         private System.Windows.Forms.LinkLabel lblBack;
         private System.Windows.Forms.Label lblDeckname;
         private System.Windows.Forms.Button btnShuffle;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Label lblCardProgress;
@@ -263,5 +269,6 @@ namespace clone
         private System.Windows.Forms.Button btnAgain;
         private System.Windows.Forms.Button btnGreat;
         private System.Windows.Forms.Button btnStudyAgain;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
