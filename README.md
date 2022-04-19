@@ -30,6 +30,7 @@ I also aim to learn new programming practices, concepts i've not heard before, a
 **Existing bugs to be fixed**
 * In the _Flashcards_ user control, after writing in the text box for adding cards to my deck, I'm not able to move in the textbox with arrow keys.
 * Not every snap of code is safe for SQL Injections, though some parts are safe.
+* UI Thread blocked when creating a new deck.
 
 **Fixed Bugs**
 * Could add cards which didn't use latin characters, such as "ų, ū, ş" but the database was removing them and making them into the latin characters.
