@@ -29,8 +29,6 @@ I also aim to learn new programming practices, concepts i've not heard before, a
 * In the _Flashcards_ user control, after writing in the text box for adding cards to my deck, I'm not able to move in the textbox with arrow keys.
 * Not every snap of code is safe for SQL Injections, though some parts are safe.
 
-* Card numbers go out of the line, if its more than 99
-
 **Fixed Bugs**
 * Could add cards which didn't use latin characters, such as "ų, ū, ş" but the database was removing them and making them into the latin characters.
 * UI Thread was getting blocked from when creating the dynamic texts for deck names while getting them from the database. Used Async/Await.
@@ -40,6 +38,7 @@ I also aim to learn new programming practices, concepts i've not heard before, a
 * Progress bar...does progress now.
 * In the _Flashcards_ user control, if I am deleting cards from my deck and only one is left, deleting that one will make that deck dead, will have to remove it and create again.
 * When creating decks, I can't use deck names that contains spaces like "john's deck"
+* Card numbers go out of the line, if its more than 99
 
 ### Screenshots
 ![image](https://user-images.githubusercontent.com/64064136/163731659-887a8497-306a-4766-abf6-847aa0e2f4dc.png)
