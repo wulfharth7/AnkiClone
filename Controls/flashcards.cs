@@ -143,8 +143,18 @@ namespace clone
         }
         private void design_shown_cards(int cards_do_exist)
         {
-            lblCardCount.Text = Convert.ToString(card_index_in_linkedlist) + "/" + deck_linked_list.Count();
-            lblCards.Text = deck_linked_list.First.Value.getFront_Face();
+            if(deck_linked_list.Count() != 0)
+            {
+                lblCardCount.Text = Convert.ToString(card_index_in_linkedlist) + "/" + deck_linked_list.Count();
+                lblCards.Text = deck_linked_list.First.Value.getFront_Face();
+            }
+            else
+            {
+                lblCards.Text = "You haven't added cards...yet!";
+                card_index_in_linkedlist--;
+                lblCardCount.Text = Convert.ToString(card_index_in_linkedlist) + "/" + deck_linked_list.Count();
+            }
+            
         }
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)

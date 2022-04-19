@@ -138,7 +138,7 @@ namespace clone
         }
         private void create_Dynamic_label_Texts()
         {
-            int x = 130;
+            int x = 125;
             int y = 35;
             foreach (var deck in Deck_Owner.users_decks)
             {
@@ -152,7 +152,7 @@ namespace clone
                     deck_1.BackColor = Color.LightGray;
                     deck_1.LinkColor = Color.Black;
                     deck_1.Location = new Point(x, y);
-                    deck_1.Size = new Size(270, 20);
+                    deck_1.Size = new Size(280, 20);
                     deck_1.LinkClicked += (s, e) =>
                     {
                         flashcards flashcard = new flashcards();

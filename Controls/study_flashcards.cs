@@ -31,6 +31,9 @@ namespace clone
                 card_index = 1;
                 start_study(decklinkedlist);
                 set_label_infos(decklinkedlist);
+                progressBar.Maximum = decklinkedlist.Count();
+                progressBar.Minimum = 0;
+                progressBar.Step = 1;
             }
             //starred deck...add it
         }
@@ -79,10 +82,7 @@ namespace clone
                 lblCardCorrect.Text = "Correct: " + Convert.ToString(card_correct);
                 lblCardRepeat.Text = "Repeat: " + Convert.ToString(card_repeat);
                 lblCardProgress.Text = Convert.ToString(card_index) + "/" + Convert.ToString(decklinkedlist.Count());
-                lblCardOutOf.Text = "Card: " + Convert.ToString(card_index) + " out of " + Convert.ToString(decklinkedlist.Count());
-                progressBar.Maximum = decklinkedlist.Count();
-                progressBar.Minimum = 0;
-                progressBar.Step = 1;
+                lblCardOutOf.Text = "Card: " + Convert.ToString(card_index) + " out of " + Convert.ToString(decklinkedlist.Count()); 
             }
             //add a snap of code here to make it full, if the deck is empty.also implement the change of code
         }
@@ -220,6 +220,7 @@ namespace clone
         }
         private void btnShuffle_Click(object sender, EventArgs e)
         {
+            progressBar.Value = 0;
             Random Rand = new Random();
 
             foreach (var item in linkedlistdeck)
@@ -281,12 +282,6 @@ namespace clone
                 return base.ProcessCmdKey(ref msg, keyData);
             }
 
-        }
-
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker worker = sender as BackgroundWorker;
-            //will modify this one later
         }
     }
 }

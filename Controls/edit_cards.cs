@@ -32,19 +32,17 @@ namespace clone
 
         private void btnDeleteCard_Click(object sender, EventArgs e)
         {
-            //ADD HERE A COUNT THING AND IF IT IS ONLY ONE 1 LEFT, UPDATE TO SPACE OTHERWISE IT'LL CRASH TO THE DEATH
-            string command = "DELETE FROM " + temp.get_deckname() + " WHERE [Front_Face]= @new_face and [Back_Face]= @new_back";
-            SqlCommand cmd = new SqlCommand(command, myDatabase);
-            cmd.Parameters.Clear();
-            myDatabase.Open(); 
-            cmd.Parameters.AddWithValue("@new_face", txtBox_term.Text);
-            cmd.Parameters.AddWithValue("@new_back", txtBox_definition.Text);
-            cmd.ExecuteNonQuery();
-            myDatabase.Close();
-            move_controls_upwards();
-            temp_llist.Remove(temp);
-            UpdateStatus();
-            this.Dispose();
+            if (one_edit_card_left() == true)
+            {
+                string command = "Update " + temp.get_deckname() + " SET [Front_Face]= @new_face ,[Back_Face]= @new_back WHERE [Front_Face]= @prev_face and [Back_Face]= @prev_back";
+                sql_and_deck_change(command, "update");
+            }
+            else
+            {
+                string command = "DELETE FROM " + temp.get_deckname() + " WHERE [Front_Face]= @new_face and [Back_Face]= @new_back";
+                sql_and_deck_change(command, "delete");
+            }
+            
         }
 
         private void button6_Click(object sender, EventArgs e) //edit_button
@@ -87,6 +85,48 @@ namespace clone
             txtBox_term.Text = flashcard.getFront_Face();
             txtBox_definition.Text = flashcard.getBack_Face();
         }
-
+        private bool one_edit_card_left()
+        {
+            int count = 0;
+            foreach (Control control in this.Parent.Controls)
+            {
+                if (control is edit_cards)
+                {
+                    count++; 
+                }
+            }
+            if(count == 1)
+            {
+                return true;//last one left
+            }
+            else
+            {
+                return false;//more than one
+            }
+        }
+        private void sql_and_deck_change(string command,string update_or_delete)
+        {
+            SqlCommand cmd = new SqlCommand(command, myDatabase);
+            cmd.Parameters.Clear();
+            myDatabase.Open();
+            if(update_or_delete == "delete")
+            {
+                cmd.Parameters.AddWithValue("@new_face", txtBox_term.Text);
+                cmd.Parameters.AddWithValue("@new_back", txtBox_definition.Text);
+            }
+            else if(update_or_delete == "update")
+            {
+                cmd.Parameters.AddWithValue("@new_face", "");
+                cmd.Parameters.AddWithValue("@new_back", "");
+                cmd.Parameters.AddWithValue("@prev_face", temp.getFront_Face());
+                cmd.Parameters.AddWithValue("@prev_back", temp.getBack_Face());
+            }
+            cmd.ExecuteNonQuery();
+            myDatabase.Close();
+            move_controls_upwards();
+            temp_llist.Remove(temp);
+            UpdateStatus();
+            this.Dispose();
+        }
     }
 }

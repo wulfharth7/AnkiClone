@@ -89,9 +89,9 @@ namespace clone
             // 
             // lblNoDeck
             // 
-            this.lblNoDeck.Location = new System.Drawing.Point(126, 57);
+            this.lblNoDeck.Location = new System.Drawing.Point(108, 57);
             this.lblNoDeck.Name = "lblNoDeck";
-            this.lblNoDeck.Size = new System.Drawing.Size(463, 23);
+            this.lblNoDeck.Size = new System.Drawing.Size(500, 23);
             this.lblNoDeck.TabIndex = 6;
             // 
             // deckControl

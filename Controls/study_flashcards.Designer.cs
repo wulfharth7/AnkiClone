@@ -45,7 +45,6 @@ namespace clone
             this.btnAgain = new System.Windows.Forms.Button();
             this.btnGreat = new System.Windows.Forms.Button();
             this.btnStudyAgain = new System.Windows.Forms.Button();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.card_box.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -156,9 +155,9 @@ namespace clone
             // 
             // lblCardProgress
             // 
-            this.lblCardProgress.Location = new System.Drawing.Point(120, 117);
+            this.lblCardProgress.Location = new System.Drawing.Point(81, 117);
             this.lblCardProgress.Name = "lblCardProgress";
-            this.lblCardProgress.Size = new System.Drawing.Size(55, 24);
+            this.lblCardProgress.Size = new System.Drawing.Size(81, 24);
             this.lblCardProgress.TabIndex = 11;
             this.lblCardProgress.Text = "0/0";
             this.lblCardProgress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -220,10 +219,6 @@ namespace clone
             this.btnStudyAgain.UseVisualStyleBackColor = true;
             this.btnStudyAgain.Click += new System.EventHandler(this.btnStudyAgain_Click);
             // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            // 
             // study_flashcards
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -269,6 +264,5 @@ namespace clone
         private System.Windows.Forms.Button btnAgain;
         private System.Windows.Forms.Button btnGreat;
         private System.Windows.Forms.Button btnStudyAgain;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
