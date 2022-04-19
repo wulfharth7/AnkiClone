@@ -23,6 +23,8 @@ I also aim to learn new programming practices, concepts i've not heard before, a
 - [x] You can move with arrow keys when browsing the deck in the flashcards panel.
 - [x] Progress Bar that shows you how much you've done. 
 - [ ] Stat and Browse page 
+- [ ] Importing decks from others
+- [ ] Work/Test mode for flashcard studies
 - [ ] Being able to state what language is the face of card that we are seeing. 
 
 **Existing bugs to be fixed**
