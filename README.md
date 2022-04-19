@@ -27,7 +27,6 @@ I also aim to learn new programming practices, concepts i've not heard before, a
 
 **Existing bugs to be fixed**
 * In the _Flashcards_ user control, after writing in the text box for adding cards to my deck, I'm not able to move in the textbox with arrow keys.
-* In the _Flashcards_ user control, if I am deleting cards from my deck and only one is left, deleting that one will make that deck dead, will have to remove it and create again.
 * When creating decks, I can't use deck names that contains spaces like "john's deck"
 * Not every snap of code is safe for SQL Injections, though some parts are safe.
 
@@ -40,6 +39,7 @@ I also aim to learn new programming practices, concepts i've not heard before, a
 * When deleting a deck, it was dropping the table but it's link label wasn't being deleted, which was created dynamically.
 * Fixed some memory leak issues, such as linked list blowing up and having 1 million objects in it, or forgetting to close textfile/database.
 * Progress bar...does progress now.
+* In the _Flashcards_ user control, if I am deleting cards from my deck and only one is left, deleting that one will make that deck dead, will have to remove it and create again.
 
 ### Screenshots
 ![image](https://user-images.githubusercontent.com/64064136/163731659-887a8497-306a-4766-abf6-847aa0e2f4dc.png)
