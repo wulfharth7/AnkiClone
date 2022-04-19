@@ -45,6 +45,7 @@ namespace clone
             {
                 try
                 {
+                    boxInput.Text = boxInput.Text.Replace(" ", "_");
                     SqlCommand myCommand = new SqlCommand("create table "+ boxInput.Text +" (UserID int,[Front_Face] nvarchar(50),[Back_Face] nvarchar(50),[FRONT_LANG] nvarchar(50),[BACK_LANG] nvarchar(50))");
                     myCommand.Connection = myDatabase;
                     myCommand.ExecuteNonQuery();

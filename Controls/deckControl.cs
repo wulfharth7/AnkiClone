@@ -145,7 +145,7 @@ namespace clone
                 if (table_list.Contains(deck) == false)
                 {
                     LinkLabel deck_1 = new LinkLabel();
-                    deck_1.Text = " " + deck;
+                    deck_1.Text = " " + deck.Replace("_"," ");
                     deck_1.LinkBehavior = LinkBehavior.NeverUnderline;
                     deck_1.LinkVisited = false;
                     deck_1.AutoSize = false;
