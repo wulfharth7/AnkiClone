@@ -43,7 +43,7 @@ namespace clone
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnImport = new System.Windows.Forms.Button();
             this.btnExprtFile = new System.Windows.Forms.Button();
             this.group_box_card_controls = new System.Windows.Forms.GroupBox();
             this.btn_add_cards = new System.Windows.Forms.Button();
@@ -203,7 +203,7 @@ namespace clone
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Controls.Add(this.button3);
+            this.groupBox2.Controls.Add(this.btnImport);
             this.groupBox2.Controls.Add(this.btnExprtFile);
             this.groupBox2.Location = new System.Drawing.Point(19, 243);
             this.groupBox2.Name = "groupBox2";
@@ -221,14 +221,15 @@ namespace clone
             this.button4.Text = "smth to do later";
             this.button4.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnImport
             // 
-            this.button3.Location = new System.Drawing.Point(22, 68);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(114, 31);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "Import Cards";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnImport.Location = new System.Drawing.Point(22, 68);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(114, 31);
+            this.btnImport.TabIndex = 8;
+            this.btnImport.Text = "Import Cards";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // btnExprtFile
             // 
@@ -294,7 +295,7 @@ namespace clone
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.Button btnExprtFile;
         private System.Windows.Forms.Label lblCardCount;
         private System.Windows.Forms.LinkLabel show_next_card;

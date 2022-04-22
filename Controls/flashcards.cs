@@ -69,7 +69,9 @@ namespace clone
         {
 
             myDatabase.Open();
-            string readingCommand = "SELECT * FROM " + this.get_deckname() + "";
+            string table_name = this.get_deckname().TrimStart();
+            table_name = table_name.Replace(" ", "_");
+            string readingCommand = "SELECT * FROM " + table_name;
             SqlCommand readCommand = new SqlCommand(readingCommand, myDatabase); //why select * but not select username
             SqlDataReader reader = readCommand.ExecuteReader();
 
@@ -154,7 +156,7 @@ namespace clone
                 card_index_in_linkedlist--;
                 lblCardCount.Text = Convert.ToString(card_index_in_linkedlist) + "/" + deck_linked_list.Count();
             }
-            
+ 
         }
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
@@ -348,6 +350,11 @@ namespace clone
                     " i'll improve this place later");
             }
             myDatabase.Close();
+        }
+
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

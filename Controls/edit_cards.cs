@@ -17,8 +17,8 @@ namespace clone
         public event StatusUpdateHandler OnUpdateStatus;
         private static string connectionstring = "Server=LAPTOP-BEQ4MFN7\\ANKICLONE; database =AnkiClone;MultipleActiveResultSets=true; Integrated Security=SSPI;";
         SqlConnection myDatabase = new SqlConnection(connectionstring);
+      
 
-     
         private Decks temp;
         private LinkedList<Decks> temp_llist;
         public edit_cards(ref Decks flashcard, LinkedList<Decks> linkedlistdeck)
@@ -27,6 +27,8 @@ namespace clone
             temp_llist = linkedlistdeck;
             fill_text_boxes(ref flashcard);
             temp = flashcard;
+            temp.set_deckname(temp.get_deckname().Trim());
+            temp.set_deckname(temp.get_deckname().Replace(" ", "_"));
             
         }
 
@@ -39,7 +41,7 @@ namespace clone
             }
             else
             {
-                string command = "DELETE FROM " + temp.get_deckname() + " WHERE [Front_Face]= @new_face and [Back_Face]= @new_back";
+                string command = "DELETE FROM " + temp.get_deckname()+ " WHERE [Front_Face]= @new_face and [Back_Face]= @new_back";
                 sql_and_deck_change(command, "delete");
             }
             

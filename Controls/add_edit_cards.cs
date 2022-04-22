@@ -64,7 +64,9 @@ namespace clone
         private bool check_if_first_card()
         {
             myDatabase.Open();
-            SqlCommand readCommand = new SqlCommand("SELECT * from "+ this.get_tablename(), myDatabase); //why select * but not select username
+            string table_name = this.get_tablename().Trim();
+            SqlCommand readCommand = new SqlCommand("SELECT * from "+ table_name.Replace(" ","_"), myDatabase); //why select * but not select username
+
             SqlDataReader reader = readCommand.ExecuteReader();
 
             string nick;
@@ -95,7 +97,8 @@ namespace clone
             myDatabase.Open();
             SqlCommand myCMD = new SqlCommand();
             myCMD.Connection = myDatabase;
-            myCMD.CommandText = "Update "+ this.get_tablename()+ " SET [Front_Face]= @name ,[Back_Face]= @pass";
+            string table_name = this.get_tablename().Trim();
+            myCMD.CommandText = "Update "+ table_name.Replace(" ", "_") + " SET [Front_Face]= @name ,[Back_Face]= @pass";
             myCMD.Parameters.Clear();
             myCMD.Parameters.AddWithValue("@name", txtBox_term.Text);
             myCMD.Parameters.AddWithValue("@pass", txtBox_definition.Text);
@@ -109,8 +112,9 @@ namespace clone
         private void insert_table()
         {
             myDatabase.Open();
-            SqlCommand myCMD = new SqlCommand();  
-            myCMD.CommandText = "INSERT into " + this.get_tablename() + " ([Front_Face],[Back_Face]) VALUES (@name,@pass)";
+            SqlCommand myCMD = new SqlCommand();
+            string table_name = this.get_tablename().Trim();
+            myCMD.CommandText = "INSERT into " + table_name.Replace(" ", "_") + " ([Front_Face],[Back_Face]) VALUES (@name,@pass)";
             myCMD.Parameters.Clear();
             myCMD.Connection = myDatabase;
             myCMD.Parameters.AddWithValue("@Name", txtBox_term.Text);
