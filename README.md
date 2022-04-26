@@ -13,18 +13,18 @@ I dont know much of DSA yet, but I've made some practice on linked lists in C be
 I also aim to learn new programming practices, concepts I've not heard before, and write a readable code, and optimise it once it works.
 
 * Documenting new concepts I've found out for the first time and planning to take a look/already took a look or learnt:
-   * MVC
-   * Overloading
-   * Agile Methodology
-   * Manager Class
-   * Wrapper Object
-   * Backgroundworker Class
-   * SQL Injections
-   * Threadpool
-   * Singleton
-   * Database Indexes
+   * **MVC
+   * **Overloading
+   * **Agile Methodology
+   * **Manager Class
+   * **Wrapper Object
+   * **Backgroundworker Class
+   * **SQL Injections
+   * **Threadpool
+   * **Singleton
+   * **Database Indexes
 * How does the program work?
-   * I've used C# and SQL Express Server along with the windows form in the project, some OOP concepts included.
+   * I've used **C#** and **SQL Express Server** along with the **windows form** in the project, some **OOP concepts** included.
    * There is only one form, and in it there is a panel. You can see the user controls in the folder, and from that moment all the user controls will be controlled in that panel.
    * As it was my first time using databases, and me trying to get used to the basic concepts, I am aware that most of my database usage was not good in practice and I am trying to improve them by reviewing the code over and over. But here is the deal:
    - * There is a login page which is working, and there is a deckpage which is unique to the user whom is logged-in. Once the user is logged in, the program checks out the tables in the database and finds out the decks the user owns, and creates linklabes dynamically/programatically. Once those link labels are created, the program will take the cards for the deck, from the database and put it into a linked list, and from there we will be dealing with the linked list. But this takes toll on the UI so it's coded as async.
