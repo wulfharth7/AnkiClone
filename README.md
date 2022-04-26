@@ -1,17 +1,37 @@
 # How does Anki/Quizlet work?
-I'll explain how the actual programs work here, so if you know, you can skip this heading. (............)
+I'll explain how the actual programs work here, so if you know, you can skip this heading. So here is how it works. Basically, there are group of decks, you name them, you create them customly. Let it be a language learning deck or for your medicine school lessons. This program exists to help you to memorize/learn the stuff by immersion.
+
+In deck groups there are group of cards. To get this more clear, here is an example. Lets say we have a french deck and 150 cards in it. There is a "Front Face" of the card and a "Rear/Back Face" of the card. Depending on what you choose, your first interaction with the card will be one of these faces, and the back will have the meaning or the stuff you should remember.
+
+If you will choose "Great" on the card, it wont be shown to you again, until you start to study the whole deck, however if you will click "Again" on the card, once you iterated the whole deck, you will now start to iterate the cards that you've chosen "Again" and you will choose "Again" or "Great" on these cards once again. This way you will have a great success of remembering/memorizing those stuff you were planning to learn.
 
 # What do I aim to learn out of this project?
 Trying to take a good grasp on some concepts that are new to me in C#, get some basic knowledge and understanding of how databases work and apply them in my project. 
 
 I dont know much of DSA yet, but I've made some practice on linked lists in C before and I do think that a Quizlet/Anki clone is an amazing idea for also practicing linked lists. All the cards in a deck are connected to each other for real. They should be.
 
-I also aim to learn new programming practices, concepts i've not heard before, and write a readable code, and optimise it once it works.
-* New concepts I've found out:
-   * (..........)
-* How does the program work?
-   * (..........) 
+I also aim to learn new programming practices, concepts I've not heard before, and write a readable code, and optimise it once it works.
 
+* Documenting new concepts I've found out for the first time and planning to take a look/already took a look or learnt:
+   * MVC
+   * Overloading
+   * Agile Methodology
+   * Manager Class
+   * Wrapper Object
+   * Backgroundworker Class
+   * SQL Injections
+   * Threadpool
+   * Singleton
+   * Database Indexes
+* How does the program work?
+   * There is only one form, and in it there is a panel. You can see the user controls in the folder, and from that moment all the user controls will be controlled in that panel.
+   * As it was my first time using databases, and me trying to get used to the basic concepts, I am aware that most of my database usage was not good in practice and I am trying to improve them by reviewing the code over and over. But here is the deal:
+   - * There is a login page which is working, and there is a deckpage which is unique to the user whom is logged-in. Once the user is logged in, the program checks out the tables in the database and finds out the decks the user owns, and creates linklabes dynamically/programatically. Once those link labels are created, the program will take the cards for the deck, from the database and put it into a linked list, and from there we will be dealing with the linked list. But this takes toll on the UI so it's coded as async.
+   - If the linklabel will be clicked, it will take you to the "flashcards" user control.
+   - In the flashcards control you can move through the cards in the linked list, and for adding/editing cards, the user controls will be added dynamically as you can see in the flashcards.
+   - If user will want to add/edit cards, it'll compare the linkedlist with database and update/insert or other proper methods and so on.
+   - There is a button in the flashcard usercontrol as you can see, which is named "study", once clicked, it'll hide all the controls in the flashcards and will upload the user control for study flashcards user control.
+   - From that moment you will be able to use the heart of the program, which is "again" or "great" feature. Once iterated, you will get to iterate the cards you've chosen "again" for.
 
 # Progress
 - [x] A working login page, with the option to log out. 
