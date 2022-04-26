@@ -24,6 +24,7 @@ I also aim to learn new programming practices, concepts I've not heard before, a
    * Singleton
    * Database Indexes
 * How does the program work?
+   * I've used C# and SQL Express Server along with the windows form in the project, some OOP concepts included.
    * There is only one form, and in it there is a panel. You can see the user controls in the folder, and from that moment all the user controls will be controlled in that panel.
    * As it was my first time using databases, and me trying to get used to the basic concepts, I am aware that most of my database usage was not good in practice and I am trying to improve them by reviewing the code over and over. But here is the deal:
    - * There is a login page which is working, and there is a deckpage which is unique to the user whom is logged-in. Once the user is logged in, the program checks out the tables in the database and finds out the decks the user owns, and creates linklabes dynamically/programatically. Once those link labels are created, the program will take the cards for the deck, from the database and put it into a linked list, and from there we will be dealing with the linked list. But this takes toll on the UI so it's coded as async.
