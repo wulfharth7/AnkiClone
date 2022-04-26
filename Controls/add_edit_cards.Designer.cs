@@ -53,9 +53,9 @@ namespace clone
             this.add_cards_Clone.Controls.Add(this.txtBox_definition);
             this.add_cards_Clone.Controls.Add(this.label2);
             this.add_cards_Clone.Controls.Add(this.label1);
-            this.add_cards_Clone.Location = new System.Drawing.Point(0, 0);
+            this.add_cards_Clone.Location = new System.Drawing.Point(0, 3);
             this.add_cards_Clone.Name = "add_cards_Clone";
-            this.add_cards_Clone.Size = new System.Drawing.Size(648, 80);
+            this.add_cards_Clone.Size = new System.Drawing.Size(648, 77);
             this.add_cards_Clone.TabIndex = 10;
             this.add_cards_Clone.TabStop = false;
             this.add_cards_Clone.Text = "Add Cards";
@@ -78,7 +78,7 @@ namespace clone
             this.linkLabel2.LinkColor = System.Drawing.Color.Black;
             this.linkLabel2.Location = new System.Drawing.Point(329, 52);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(84, 20);
+            this.linkLabel2.Size = new System.Drawing.Size(84, 17);
             this.linkLabel2.TabIndex = 6;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "Language";
@@ -97,7 +97,7 @@ namespace clone
             this.linkLabel1.LinkColor = System.Drawing.Color.Black;
             this.linkLabel1.Location = new System.Drawing.Point(118, 51);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(84, 20);
+            this.linkLabel1.Size = new System.Drawing.Size(84, 17);
             this.linkLabel1.TabIndex = 1;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Language";
@@ -164,6 +164,7 @@ namespace clone
             this.Controls.Add(this.add_cards_Clone);
             this.Name = "add_edit_cards";
             this.Size = new System.Drawing.Size(648, 84);
+            this.Load += new System.EventHandler(this.add_edit_cards_Load);
             this.add_cards_Clone.ResumeLayout(false);
             this.add_cards_Clone.PerformLayout();
             this.ResumeLayout(false);

@@ -33,6 +33,7 @@ namespace clone
         {
             InitializeComponent();
             temp_llist = linkedlistdeck;
+
         }
 
         private void btn_add_card_Click(object sender, EventArgs e)
@@ -64,8 +65,7 @@ namespace clone
         private bool check_if_first_card()
         {
             myDatabase.Open();
-            string table_name = this.get_tablename().Trim();
-            SqlCommand readCommand = new SqlCommand("SELECT * from "+ table_name.Replace(" ","_"), myDatabase); //why select * but not select username
+            SqlCommand readCommand = new SqlCommand("SELECT * from "+ this.get_tablename(), myDatabase); //why select * but not select username
 
             SqlDataReader reader = readCommand.ExecuteReader();
 
@@ -97,8 +97,7 @@ namespace clone
             myDatabase.Open();
             SqlCommand myCMD = new SqlCommand();
             myCMD.Connection = myDatabase;
-            string table_name = this.get_tablename().Trim();
-            myCMD.CommandText = "Update "+ table_name.Replace(" ", "_") + " SET [Front_Face]= @name ,[Back_Face]= @pass";
+            myCMD.CommandText = "Update "+ this.get_tablename() + " SET [Front_Face]= @name ,[Back_Face]= @pass";
             myCMD.Parameters.Clear();
             myCMD.Parameters.AddWithValue("@name", txtBox_term.Text);
             myCMD.Parameters.AddWithValue("@pass", txtBox_definition.Text);
@@ -113,8 +112,7 @@ namespace clone
         {
             myDatabase.Open();
             SqlCommand myCMD = new SqlCommand();
-            string table_name = this.get_tablename().Trim();
-            myCMD.CommandText = "INSERT into " + table_name.Replace(" ", "_") + " ([Front_Face],[Back_Face]) VALUES (@name,@pass)";
+            myCMD.CommandText = "INSERT into " + this.get_tablename() + " ([Front_Face],[Back_Face]) VALUES (@name,@pass)";
             myCMD.Parameters.Clear();
             myCMD.Connection = myDatabase;
             myCMD.Parameters.AddWithValue("@Name", txtBox_term.Text);
@@ -167,5 +165,10 @@ namespace clone
             UpdateStatus();
         }
 
+        private void add_edit_cards_Load(object sender, EventArgs e)
+        {
+            this.set_tablename(this.get_tablename().Trim());
+            this.set_tablename(this.get_tablename().Replace(" ", "_"));
+        }
     }
 }

@@ -29,7 +29,6 @@ namespace clone
             temp = flashcard;
             temp.set_deckname(temp.get_deckname().Trim());
             temp.set_deckname(temp.get_deckname().Replace(" ", "_"));
-            
         }
 
         private void btnDeleteCard_Click(object sender, EventArgs e)
@@ -43,8 +42,7 @@ namespace clone
             {
                 string command = "DELETE FROM " + temp.get_deckname()+ " WHERE [Front_Face]= @new_face and [Back_Face]= @new_back";
                 sql_and_deck_change(command, "delete");
-            }
-            
+            } 
         }
 
         private void button6_Click(object sender, EventArgs e) //edit_button
