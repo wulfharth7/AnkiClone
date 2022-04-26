@@ -13,16 +13,16 @@ I dont know much of DSA yet, but I've made some practice on linked lists in C be
 I also aim to learn new programming practices, concepts I've not heard before, and write a readable code, and optimise it once it works.
 
 * Documenting new concepts I've found out for the first time and planning to take a look/already took a look or learnt:
-   * **MVC
-   * **Overloading
-   * **Agile Methodology
-   * **Manager Class
-   * **Wrapper Object
-   * **Backgroundworker Class
-   * **SQL Injections
-   * **Threadpool
-   * **Singleton
-   * **Database Indexes
+   * **MVC**
+   * **Overloading**
+   * **Agile Methodology**
+   * **Manager Class**
+   * **Wrapper Object**
+   * **Backgroundworker Class**
+   * **SQL Injections**
+   * **Threadpool**
+   * **Singleton**
+   * **Database Indexes**
 * How does the program work?
    * I've used **C#** and **SQL Express Server** along with the **windows form** in the project, some **OOP concepts** included.
    * There is only one form, and in it there is a panel. You can see the user controls in the folder, and from that moment all the user controls will be controlled in that panel.
