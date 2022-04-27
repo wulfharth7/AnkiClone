@@ -23,6 +23,7 @@ I also aim to learn new programming practices, concepts I've not heard before, a
    * **Threadpool**
    * **Singleton**
    * **Database Indexes**
+   * **Lambda Functions**
 * How does the program work?
    * I've used **C#** and **SQL Express Server** along with the **windows form** in the project, some **OOP concepts** included.
    * There is only one form, and in it there is a panel. You can see the user controls in the folder, and from that moment all the user controls will be controlled in that panel.
