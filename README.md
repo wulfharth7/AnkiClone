@@ -48,6 +48,7 @@ I also aim to learn new programming practices, concepts I've not heard before, a
 - [ ] Importing decks from others
 - [ ] Work/Test mode for flashcard studies
 - [ ] Being able to state what language is the face of card that we are seeing. 
+- [ ] Rename decks
 
 **Existing bugs to be fixed**
 * In the _Flashcards_ user control, after writing in the text box for adding cards to my deck, I'm not able to move in the textbox with arrow keys.
